@@ -1,0 +1,16 @@
+/// Id del usuario que creo el registro
+idCreatedBy Int? @map("aud_usuario_crea")
+/// Fecha de creación del registro
+createdDate DateTime? @default(now()) @map("aud_fecha_crea")
+/// Id del usuario que actualizó el registro
+idUpdatedBy Int? @map("aud_usuario_modifica")
+/// Fecha de actualización del registro
+updatedDate DateTime? @map("aud_fecha_modifica")
+/// Id del usuario que eliminó el registro
+idDeletedBy Int? @map("aud_usuario_elimina")
+/// Fecha de eliminación del registro
+deletedDate DateTime? @map("aud_fecha_elimina")
+/// Estado del registro true = eliminado
+state Boolean @default(true)
+/// Código único del registro
+uuid String @unique @default(uuid()) @map("codigo")

@@ -1,0 +1,24 @@
+name: Deploy backend
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  PROJECT_NAME: mesabosques-banckend # Must be the same name of the git repository
+
+jobs:
+  build:
+    runs-on:
+      - self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create and run Docker container
+        run: |
+          cp ../../wcs-storage/.env .env
+          export PATH=/opt/docker_cont/:$PATH && start_container.sh -p $PROJECT_NAME

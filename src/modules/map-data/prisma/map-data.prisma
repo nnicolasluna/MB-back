@@ -1,0 +1,44 @@
+/// Tabla de recurosos cartográficos
+model MapData {
+  /// Id único del mapa
+  id              Int       @id @default(autoincrement())
+  /// Nombre del mapa
+  name            String?   @map("nombre") @db.VarChar(255)
+  /// Tipo de mapa (Punto, Línea, Polígono)
+  typeGeom        String?   @map("tipo_geom") @db.VarChar(500)
+  /// Descripción del mapa
+  description     String?   @map("descripcion") @db.Text
+  /// Frecuencia de actualización del mapa
+  updateFrequency String?   @map("frecuencia_actualizacion") @db.VarChar(300)
+  /// Fecha de contenido
+  contentDate     DateTime? @map("fecha_contenido") @db.Date
+  /// Permitir descarga
+  allowDownload   Boolean?  @map("permitir_descarga") @db.Boolean
+  /// Es visible en el geovisor público
+  isPublic        Boolean?  @map("es_publico") @db.Boolean
+
+  /// Boundingbox del mapa
+  bbox  String? @map("bbox") @db.VarChar(300)
+  /// Nombre de la tabla del mapa en el schema cartographic
+  layer String? @map("capa") @db.VarChar(300)
+
+  /// Id del estilo asociado al mapa
+  idStyle Int?   @map("estilo")
+  style   Style? @relation("StyleMapData", fields: [idStyle], references: [id])
+
+	/// Imagen raster
+  urlImage  String? @map("url_image")
+	/// SRS raster
+  srsImage  String? @map("srs_image")
+	/// Raster name in db
+  nameImage String? @map("name_image")
+	/// Id de importación raster geoserver
+  importId  Int?    @map("import_id")
+	/// Boundingbox del raster
+  bboxImage Json?   @map("bbox_image")
+
+  ...auditFields
+
+  @@map("recursos_cartograficos")
+  @@schema("public")
+}

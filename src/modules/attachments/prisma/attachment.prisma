@@ -1,0 +1,18 @@
+/// Tabla de archivos
+model Attachment {
+  /// Id único del archivo
+  id          Int     @id @default(autoincrement())
+  /// Nombre del archivo
+  filename    String  @map("nombre") @db.VarChar(500)
+  /// MimeType del archivo
+  contentType String  @map("tipo_archivo") @db.VarChar(250)
+  /// Ruta del archivo
+  publicUrl   String? @db.Text
+  /// Tamaño del archivo en bytes
+  sizeBytes   Int     @map("tamano_bytes")
+
+  ...auditFields
+
+  @@map("archivos")
+  @@schema("public")
+}

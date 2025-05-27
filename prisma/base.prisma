@@ -1,0 +1,33 @@
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [postgis]
+  schemas    = ["public"]
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearchPostgres", "postgresqlExtensions", "multiSchema"]
+}
+
+generator comments {
+  provider = "prisma-db-comments-generator"
+}
+
+/// Tabla Sitios Arqueológicos
+model ArcheologicalSites {
+  /// Id único del sitio
+  id Int @id @default(autoincrement()) @map("id")
+
+  /// Nombre del sitio
+  name String @map("nombre") @db.VarChar(255)
+
+  /// Nombre de la cobertura
+  layer String @map("cobertura") @db.VarChar(255)
+
+  /// Nombre del estilo
+  styleName String @map("estilo") @db.VarChar(255)
+
+  @@map("sitios_arqueologicos")
+  @@schema("public")
+}

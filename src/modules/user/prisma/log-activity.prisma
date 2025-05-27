@@ -1,0 +1,22 @@
+/// Tabla de actividades
+model LogActivity {
+  /// Id único de actividad
+  id          Int       @id @default(autoincrement())
+  /// Descripción de la actividad
+  description String?   @map("descripcion") @db.VarChar(100)
+  /// Método HTTP  que se utilizó
+  method      String?   @map("metodo") @db.VarChar(100)
+  /// Url del recurso en el que se realizo la actividad
+  url         String?   @map("url") @db.VarChar(100)
+  /// Ip del que realizo la actividad
+  ip          String?   @map("direccion_ip") @db.VarChar(100)
+  /// Id del usuario que realizó la actividad
+  idUser      Int?      @map("id_usuario")
+  /// Fecha de la actividad
+  date        DateTime? @default(now()) @map("fecha_accion")
+
+  user User? @relation(fields: [idUser], references: [id])
+
+  @@map("log_actividad")
+  @@schema("public")
+}

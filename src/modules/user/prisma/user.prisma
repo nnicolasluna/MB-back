@@ -1,0 +1,69 @@
+enum UserStatus {
+  ACTIVE
+  APROVE
+  INACTIVE
+  DELETED
+  PENDING
+  REJECT
+  DISABLED
+  BANNED
+
+  @@schema("public")
+}
+
+/// Tabla de usuarios
+model User {
+  /// Id único del usuario
+  id            Int    @id @default(autoincrement())
+  /// Nombre/s propios del usuario
+  name          String @map("nombre") @db.VarChar(100)
+  /// Primer apellido del usuario
+  firstSurname  String @map("apellido_paterno") @db.VarChar(50)
+  /// Segundo apellido del usuario
+  secondSurname String @map("apellido_materno") @db.VarChar(50)
+  /// Cédula de identidad del usuario
+  ci            String @map("ci") @db.VarChar(50)
+  /// Dirección del usuario
+  address       String @map("direccion") @db.Text
+
+  /// Nombre de usuario para inicar sesión
+  username String  @map("nombre_usuario") @db.VarChar(50)
+  /// Correo del usuario
+  email    String  @map("correo") @db.VarChar(50)
+  /// Teléfono del usuario
+  phone    String? @map("telefono") @db.VarChar(50)
+
+  /// Fecha de expiración del la cuenta del usuario
+  expirationAccount DateTime? @map("expiracion_cuenta") @db.Date
+
+  /// Contraseña encriptada del usuario
+  password                   String?    @map("contraseña") @db.VarChar(200)
+  /// Bloqueado hasta
+  blockedUntil               DateTime?  @map("bloqueado_hasta") @db.Date
+  /// 2FA (Por correo) activado si / no
+  isTFAActive                Boolean    @default(false) @map("tfa_activo")
+  /// Codigo de verificación del usuario
+  verificationCode           String?    @map("codigo_verificacion") @db.VarChar(255)
+  /// Fecha de expiración del código de verificación
+  expirationVerificationCode DateTime?  @map("expiracion_codigo_verificacion")
+  /// Código de verificación revisado
+  reviwedVerificationCode    Boolean?   @default(false) @map("codigo_verificacion_revisado")
+  /// Estado del usuario
+  userStatus                 UserStatus @default(PENDING) @map("estado_usuario")
+
+  /// Id del adjunto de la foto del usuario
+  idImage Int?        @map("id_imagen")
+  image   Attachment? @relation(fields: [idImage], references: [id])
+
+  /// Id del rol del usuario
+  idRole Int  @map("id_rol")
+  role   Role @relation("usuario_rol", fields: [idRole], references: [id])
+
+  logActivities LogActivity[]
+
+  ...auditFields
+
+  @@unique([username, email], map: "nombre_usuario_correo")
+  @@map("usuario")
+  @@schema("public")
+}

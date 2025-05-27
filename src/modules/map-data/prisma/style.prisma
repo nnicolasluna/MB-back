@@ -1,0 +1,16 @@
+/// Tabla de estilos
+model Style {
+  /// Id único del estilo
+  id   Int     @id @default(autoincrement())
+  /// Nombre del estilo
+  name String? @map("nombre") @db.VarChar(300)
+  /// Tipo del estilo (SLD)
+  type String? @map("tipo") @db.VarChar(100)
+
+  maps MapData[] @relation("StyleMapData")
+
+  ...auditFields
+
+  @@map("estilos_mapas")
+  @@schema("public")
+}

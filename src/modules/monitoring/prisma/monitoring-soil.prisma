@@ -1,0 +1,28 @@
+/// Tabla de monitoreo de degradación de suelo
+model MonitoringSoilDegradation {
+  /// Id único del registro
+  id            Int       @id @default(autoincrement())
+  /// Nombre del monitoreo
+  name          String?   @map("nombre") @db.VarChar(255)
+  /// Descripción del monitoreo
+  description   String?   @map("descripcion") @db.Text
+  /// Fecha de del mapa
+  coverageDate  DateTime? @map("fecha_contenido") @db.Date
+  /// Estado Activo/Inactivo
+  coverageState String?   @map("estado_contenido") @db.VarChar(255)
+
+  /// Boundingbox del mapa
+  bbox  String? @map("bbox") @db.VarChar(300)
+  /// Nombre de la tabla del mapa en el schema cartographic
+  layer String? @map("capa") @db.VarChar(300)
+
+  /// Nombre del estilo asociado al mapa
+  styleName String? @map("nombre_estilo") @db.VarChar(255)
+
+  createdBy User? @relation(fields: [idCreatedBy], references: [id])
+
+  ...auditFields
+
+  @@map("monitoreo_degradacion_suelo")
+  @@schema("public")
+}

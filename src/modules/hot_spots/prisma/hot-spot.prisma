@@ -1,0 +1,18 @@
+/// Tabla de puntos de calor
+model HotSpot {
+  /// Id único del registro
+  id      Int      @id @default(autoincrement())
+  /// Url del shape descargado
+  url     String   @map("url")
+  /// Detalles
+  details String?  @map("detalles") @db.Text
+  /// Fecha de registro
+  date    DateTime @map("fecha")
+  /// Estado
+  state   String   @map("estado")
+  /// Tabla de datos
+  table   String?  @map("tabla_datos")
+
+  @@map("focos_calor")
+  @@schema("public")
+}

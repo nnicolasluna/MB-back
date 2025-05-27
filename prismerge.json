@@ -1,0 +1,9 @@
+{
+	"app": {
+		"inputs": ["./prisma/base.prisma", "./src/**/prisma/*.prisma"],
+		"fragments": {
+			"auditFields": "./prisma/fragments/audit-fields.prisma.fragment"
+		},
+		"output": "./prisma/schema.prisma"
+	}
+}

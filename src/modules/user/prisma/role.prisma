@@ -1,0 +1,54 @@
+/// Tabla roles
+model Role {
+  /// Id único del rol
+  id          Int     @id @default(autoincrement())
+  /// Nombre del rol
+  name        String  @map("nombre_rol") @db.VarChar(100)
+  /// Descripción del rol
+  description String? @map("descripcion_rol") @db.VarChar(250)
+
+  ...auditFields
+
+  users         User[]          @relation("usuario_rol")
+  resourceRoles ResourceRoles[]
+
+  @@unique([name], map: "nombre_rol")
+  @@map("roles")
+  @@schema("public")
+}
+
+/// Tabla módulos del sistema
+model Resources {
+  /// Id único del módulo
+  id   Int    @id @default(autoincrement())
+  /// Nombre del módulo
+  name String @map("nombre_recurso") @db.VarChar(200)
+  /// Código del módulo
+  code String @unique @map("codigo_recurso") @db.VarChar(50)
+  /// Tipo de módulo
+  type String @map("tipo_recurso") @db.VarChar(30)
+
+  resourceRoles ResourceRoles[]
+
+  @@map("recursos")
+  @@schema("public")
+}
+
+/// Tabla Roles - Módulos
+model ResourceRoles {
+  /// Id del rol
+  idRole     Int @map("id_role")
+  /// Id del módulo
+  idResource Int @map("id_recurso")
+  /// Permiso codificado
+  permission Int @default(0) @map("permiso")
+
+  resource Resources @relation(fields: [idResource], references: [id])
+  role     Role      @relation(fields: [idRole], references: [id])
+
+  ...auditFields
+
+  @@id([idRole, idResource])
+  @@map("recurso_roles")
+  @@schema("public")
+}
