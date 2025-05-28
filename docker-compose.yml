@@ -3,23 +3,23 @@ version: '3.9'
 services:
   backend:
     stdin_open: true
-    image: mesabosque-backend:latest
-    container_name: mesabosque-backend
+    image: mesabosques-banckend:latest
+    container_name: mesabosques-banckend
     env_file:
       - .env
     environment:
       NODE_ENV: production
     restart: unless-stopped
     ports:
-      - 3008:3000
+      - 3009:3000
     volumes:
-      - ../../mesabosque-storage/:/app/storage
+      - ../../mesabosques-storage/:/app/storage
     networks:
       - net-mesabosque
 
-  redis-mesabosque:
+  redis-mesabosques:
     image: redis:8.0.1-alpine3.21
-    container_name: redis-mesabosque
+    container_name: redis-mesabosques
     restart: unless-stopped
     sysctls:
       net.core.somaxconn: '511'
@@ -27,10 +27,10 @@ services:
       - '6379'
     command: redis-server --save 20 1 --loglevel warning
     volumes:
-      - ../../mesabosque-redis:/data
+      - ../../mesabosques-redis:/data
     networks:
-      - net-mesabosque
+      - net-mesabosques
 
 networks:
-  net-mesabosque:
+  net-mesabosques:
     driver: bridge

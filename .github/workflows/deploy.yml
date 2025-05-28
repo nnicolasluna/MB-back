@@ -20,5 +20,5 @@ jobs:
 
       - name: Create and run Docker container
         run: |
-          cp ../../wcs-storage/.env .env
+          cp ../../mesabosques-storage/.env .env
           export PATH=/opt/docker_cont/:$PATH && start_container.sh -p $PROJECT_NAME
