@@ -15,7 +15,7 @@ services:
     volumes:
       - ../../mesabosques-storage/:/app/storage
     networks:
-      - net-mesabosque
+      - net-mesabosques
 
   redis-mesabosques:
     image: redis:8.0.1-alpine3.21
