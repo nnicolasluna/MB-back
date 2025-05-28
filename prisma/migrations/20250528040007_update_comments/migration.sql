@@ -16,42 +16,6 @@ COMMENT ON COLUMN "archivos"."aud_fecha_elimina" IS 'Fecha de eliminación del r
 COMMENT ON COLUMN "archivos"."state" IS 'Estado del registro true = eliminado';
 COMMENT ON COLUMN "archivos"."codigo" IS 'Código único del registro';
 
--- recursos_cartograficos comments
-COMMENT ON TABLE "recursos_cartograficos" IS 'Tabla de recurosos cartográficos';
-COMMENT ON COLUMN "recursos_cartograficos"."id" IS 'Id único del mapa';
-COMMENT ON COLUMN "recursos_cartograficos"."nombre" IS 'Nombre del mapa';
-COMMENT ON COLUMN "recursos_cartograficos"."tipo_geom" IS 'Tipo de mapa (Punto, Línea, Polígono)';
-COMMENT ON COLUMN "recursos_cartograficos"."descripcion" IS 'Descripción del mapa';
-COMMENT ON COLUMN "recursos_cartograficos"."frecuencia_actualizacion" IS 'Frecuencia de actualización del mapa';
-COMMENT ON COLUMN "recursos_cartograficos"."fecha_contenido" IS 'Fecha de contenido';
-COMMENT ON COLUMN "recursos_cartograficos"."permitir_descarga" IS 'Permitir descarga';
-COMMENT ON COLUMN "recursos_cartograficos"."es_publico" IS 'Es visible en el geovisor público';
-COMMENT ON COLUMN "recursos_cartograficos"."bbox" IS 'Boundingbox del mapa';
-COMMENT ON COLUMN "recursos_cartograficos"."capa" IS 'Nombre de la tabla del mapa en el schema cartographic';
-COMMENT ON COLUMN "recursos_cartograficos"."estilo" IS 'Id del estilo asociado al mapa';
-COMMENT ON COLUMN "recursos_cartograficos"."aud_usuario_crea" IS 'Id del usuario que creo el registro';
-COMMENT ON COLUMN "recursos_cartograficos"."aud_fecha_crea" IS 'Fecha de creación del registro';
-COMMENT ON COLUMN "recursos_cartograficos"."aud_usuario_modifica" IS 'Id del usuario que actualizó el registro';
-COMMENT ON COLUMN "recursos_cartograficos"."aud_fecha_modifica" IS 'Fecha de actualización del registro';
-COMMENT ON COLUMN "recursos_cartograficos"."aud_usuario_elimina" IS 'Id del usuario que eliminó el registro';
-COMMENT ON COLUMN "recursos_cartograficos"."aud_fecha_elimina" IS 'Fecha de eliminación del registro';
-COMMENT ON COLUMN "recursos_cartograficos"."state" IS 'Estado del registro true = eliminado';
-COMMENT ON COLUMN "recursos_cartograficos"."codigo" IS 'Código único del registro';
-
--- estilos_mapas comments
-COMMENT ON TABLE "estilos_mapas" IS 'Tabla de estilos';
-COMMENT ON COLUMN "estilos_mapas"."id" IS 'Id único del estilo';
-COMMENT ON COLUMN "estilos_mapas"."nombre" IS 'Nombre del estilo';
-COMMENT ON COLUMN "estilos_mapas"."tipo" IS 'Tipo del estilo (SLD)';
-COMMENT ON COLUMN "estilos_mapas"."aud_usuario_crea" IS 'Id del usuario que creo el registro';
-COMMENT ON COLUMN "estilos_mapas"."aud_fecha_crea" IS 'Fecha de creación del registro';
-COMMENT ON COLUMN "estilos_mapas"."aud_usuario_modifica" IS 'Id del usuario que actualizó el registro';
-COMMENT ON COLUMN "estilos_mapas"."aud_fecha_modifica" IS 'Fecha de actualización del registro';
-COMMENT ON COLUMN "estilos_mapas"."aud_usuario_elimina" IS 'Id del usuario que eliminó el registro';
-COMMENT ON COLUMN "estilos_mapas"."aud_fecha_elimina" IS 'Fecha de eliminación del registro';
-COMMENT ON COLUMN "estilos_mapas"."state" IS 'Estado del registro true = eliminado';
-COMMENT ON COLUMN "estilos_mapas"."codigo" IS 'Código único del registro';
-
 -- log_actividad comments
 COMMENT ON TABLE "log_actividad" IS 'Tabla de actividades';
 COMMENT ON COLUMN "log_actividad"."id" IS 'Id único de actividad';

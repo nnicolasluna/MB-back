@@ -1,16 +1,10 @@
 import { PrismaClient } from '@prisma/client';
-import { RolesSeeder, ResourcesSeeder, UsersSeeder, ResourceRolesSeeder, ArchelogicalSitesSeeder } from './seeders';
+import { RolesSeeder, ResourcesSeeder, UsersSeeder, ResourceRolesSeeder } from './seeders';
 
 const prisma = new PrismaClient();
 
 async function main() {
-	const seeders = [
-		new RolesSeeder(),
-		new ResourcesSeeder(),
-		new ResourceRolesSeeder(),
-		new UsersSeeder(),
-		new ArchelogicalSitesSeeder(),
-	];
+	const seeders = [new RolesSeeder(), new ResourcesSeeder(), new ResourceRolesSeeder(), new UsersSeeder()];
 
 	for (const seeder of seeders) {
 		await seeder.seed(prisma);

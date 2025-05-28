@@ -5,12 +5,19 @@ export const ResourceTypes = Object.freeze({
 	SYSTEM_PERMISSIONS: 'SYSTEM_PERMISSIONS',
 	LOG_ACTIVITIES: 'LOG_ACTIVITIES',
 
-	MENU_CARTOGRAPHIC: 'MENU_CARTOGRAPHIC',
-	CARTOGRAPHIC_RESOURCES: 'CARTOGRAPHIC_RESOURCES',
-	CARTOGRAPHIC_STYLES: 'CARTOGRAPHIC_STYLES',
-
-	MENU_MONITORING: 'MENU_MONITORING',
-	FIRE_MONITORING: 'FIRE_MONITORING',
+	// MENU_CONVOCATIONS: 'MENU_CONVOCATIONS', // Reuniones y Convocatorias
+	// SESSIONS: 'SESSIONS', // Administración de Sesiones
+	// SCHEDULE: 'SCHEDULE', // Administración de Agenda
+	//
+	// MENU_MEMBERS: 'MENU_MEMBERS', // Monitoreo y Comite
+	// GROUPS: 'GROUPS', // Grupos de Trabajo
+	//
+	// MENU_NOTES: 'MENU_NOTES', // Actos Administrativos
+	// NOTES: 'NOTES', // Seguimiento de Actas
+	//
+	// MENU_REPOSITORY: 'MENU_REPOSITORY', // Repositorio de Documentos
+	// DOCUMENTS: 'DOCUMENTS', // Administración de Documentos
+	// OFICIAL_DOCUMENTS: 'OFFICIAL_DOCUMENTS', // Documentos Oficiales
 
 	ATTACHMENTS: 'ATTACHMENTS',
 });
@@ -41,29 +48,4 @@ export const Resources = Object.freeze([
 		code: ResourceTypes.LOG_ACTIVITIES,
 		type: 'MODULE',
 	},
-	{
-		name: 'Menú Mapas',
-		code: ResourceTypes.MENU_CARTOGRAPHIC,
-		type: 'VIEW',
-	},
-	{
-		name: 'Administración de Mapas',
-		code: ResourceTypes.CARTOGRAPHIC_RESOURCES,
-		type: 'MODULE',
-	},
-	{
-		name: 'Administración de Estilos',
-		code: ResourceTypes.CARTOGRAPHIC_STYLES,
-		type: 'MODULE',
-	},
-	{
-		name: 'Menú Monitoreo',
-		code: ResourceTypes.MENU_MONITORING,
-		type: 'VIEW',
-	},
-	// {
-	// 	name: 'Monitoreo de Fuego',
-	// 	code: ResourceTypes.FIRE_MONITORING,
-	// 	type: 'MODULE',
-	// },
 ]);
