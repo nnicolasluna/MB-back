@@ -15,6 +15,7 @@ import { AttachmentsModule } from '@modules/attachments/attachments.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import { createKeyv } from '@keyv/redis';
 import { ScheduleModule } from '@nestjs/schedule';
+import { MeetModule } from './modules/meet/meet.module';
 
 @Module({
 	imports: [
@@ -64,6 +65,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 		EmailModule,
 		NotificationsModule,
 		AttachmentsModule,
+		MeetModule,
 	],
 	controllers: [],
 	providers: [],
