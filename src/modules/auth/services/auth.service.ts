@@ -35,7 +35,7 @@ export class AuthService {
 		private readonly jwtService: JwtService,
 		private readonly configService: ConfigService,
 		private readonly emailService: EmailService,
-	) {}
+	) { }
 
 	public async getUser(where: Prisma.UserWhereInput) {
 		return this.db.user.findFirst({
@@ -92,7 +92,7 @@ export class AuthService {
 		else await this.db.user.update({ where: { id: user.id }, data: { blockedUntil: null } });
 
 		// User Login tries
-		/* const loginTries: number = (await this.cacheManager.get(user.username)) ?? 0;
+		const loginTries: number = (await this.cacheManager.get(user.username)) ?? 0;
 
 		const validatePassword = await compare(password, user.password);
 
@@ -117,7 +117,7 @@ export class AuthService {
 		}
 
 		await this.cacheManager.del(user.username);
- */
+
 		const tmpPermisos = user.role;
 		const accessTo = {};
 
