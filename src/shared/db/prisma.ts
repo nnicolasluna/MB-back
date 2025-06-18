@@ -1,7 +1,7 @@
 import { INestApplication, Injectable } from '@nestjs/common';
 import { Prisma, PrismaClient } from '@prisma/client';
 
-const modelsWithOutAuditFields = ['LogActivity', 'Resources', 'HotSpot', 'ArcheologicalSites'];
+const modelsWithOutAuditFields = ['LogActivity', 'Resources', 'HotSpot', 'ArcheologicalSites', 'group'];
 
 function extendPrismaClient() {
 	const prisma = new PrismaClient({ log: ['query', 'info', 'warn', 'error'] });

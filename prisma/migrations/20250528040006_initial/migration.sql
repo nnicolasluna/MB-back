@@ -148,3 +148,14 @@ ALTER TABLE "public"."usuario" ADD CONSTRAINT "usuario_id_imagen_fkey" FOREIGN K
 
 -- AddForeignKey
 ALTER TABLE "public"."usuario" ADD CONSTRAINT "usuario_id_rol_fkey" FOREIGN KEY ("id_rol") REFERENCES "public"."roles"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+
+CREATE TABLE "public"."grupo" (
+    "id" SERIAL NOT NULL,
+    "nombre" VARCHAR(200) NOT NULL,
+    "periodo_inicio" DATE,
+    "periodo_fin" DATE,
+    "fecha_crea" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "fecha_modifica" TIMESTAMP(3),
+    "fecha_elimina" TIMESTAMP(3)
+);

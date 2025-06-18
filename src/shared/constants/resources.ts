@@ -1,7 +1,13 @@
 export const ResourceTypes = Object.freeze({
 	MENU_USERS: 'MENU_USERS',
+	MENU_MEETS: 'MENU_MEETS',
 	USERS: 'USERS',
 	ROLES: 'ROLES',
+	MENU_GROUP: 'MENU_GROUP',
+	AGENDA: 'AGENDA',
+	GROUP: 'GROUP',
+	OFFICIAL: 'OFFICIAL',
+	MENU_DOCS: 'MENU_DOCS',
 	SYSTEM_PERMISSIONS: 'SYSTEM_PERMISSIONS',
 	LOG_ACTIVITIES: 'LOG_ACTIVITIES',
 
@@ -46,6 +52,36 @@ export const Resources = Object.freeze([
 	{
 		name: 'Log de Actividades',
 		code: ResourceTypes.LOG_ACTIVITIES,
+		type: 'MODULE',
+	},
+	{
+		name: 'Menú Reuniones y Convocatorias',
+		code: ResourceTypes.MENU_MEETS,
+		type: 'VIEW',
+	},
+	{
+		name: 'Administración de Agenda',
+		code: ResourceTypes.AGENDA,
+		type: 'MODULE',
+	},
+	{
+		name: 'Menú Miembros y Comite',
+		code: ResourceTypes.MENU_GROUP,
+		type: 'VIEW',
+	},
+	{
+		name: 'Grupos de Trabajo',
+		code: ResourceTypes.GROUP,
+		type: 'MODULE',
+	},
+	{
+		name: 'Repositorio de Información y Documentos',
+		code: ResourceTypes.MENU_DOCS,
+		type: 'VIEW',
+	},
+	{
+		name: 'Documentos Oficiales',
+		code: ResourceTypes.OFFICIAL,
 		type: 'MODULE',
 	},
 ]);
