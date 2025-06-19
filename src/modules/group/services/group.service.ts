@@ -16,8 +16,14 @@ export class GroupService {
 		});
 	}
 
-	findAll() {
-		return this.db.grupo.findMany();
+	async findAll() {
+		/* return this.db.grupo.findMany(); */
+		const grupos = await this.db.grupo.findMany();
+
+		return {
+			items: grupos, // mantiene los campos tal cual: id, nombre, periodo_inicio, periodo_fin
+			total: grupos.length,
+		};
 	}
 
 	findOne(id: number) {
@@ -45,5 +51,9 @@ export class GroupService {
 		return this.db.grupo.delete({
 			where: { id },
 		});
+	}
+
+	private formatDate(date: Date): string {
+		return new Intl.DateTimeFormat('es-BO').format(date);
 	}
 }
