@@ -3,11 +3,8 @@ import { SimplePrismaService } from '@shared/db/prisma.simple';
 
 @Injectable()
 export class ActivityService {
-	constructor(private db: SimplePrismaService) {}
+	constructor(private db: SimplePrismaService) { }
 
-	/* create(createActivityDto: any) {
-		return createActivityDto;
-	} */
 	async create(data: any) {
 		const { actividad, tareas } = data;
 
@@ -50,8 +47,20 @@ export class ActivityService {
 
 		return { message: 'Actividad y tareas registradas con éxito' };
 	}
-	findAll() {
-		return `This action returns all activity`;
+	async findAll() {
+		const data = await this.db.actividad.findMany({
+			include: {
+				Tarea: {
+					include: {
+						FechaProgramada: true,
+					},
+				},
+			},
+		});
+		return {
+			items: data,
+			total: data.length,
+		};
 	}
 
 	findOne(id: number) {

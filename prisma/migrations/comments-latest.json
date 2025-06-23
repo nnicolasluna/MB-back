@@ -412,10 +412,178 @@
       }
     ]
   },
+  "Acta": {
+    "table": {
+      "tableName": "Acta",
+      "comment": ""
+    },
+    "columns": [
+      {
+        "tableName": "Acta",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "Acta",
+        "columnName": "nombreActa",
+        "comment": ""
+      },
+      {
+        "tableName": "Acta",
+        "columnName": "reunionId",
+        "comment": ""
+      }
+    ]
+  },
+  "Actividad": {
+    "table": {
+      "tableName": "Actividad",
+      "comment": ""
+    },
+    "columns": [
+      {
+        "tableName": "Actividad",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "Actividad",
+        "columnName": "nombre",
+        "comment": ""
+      },
+      {
+        "tableName": "Actividad",
+        "columnName": "tipo",
+        "comment": ""
+      },
+      {
+        "tableName": "Actividad",
+        "columnName": "grupoId",
+        "comment": ""
+      }
+    ]
+  },
+  "FechaProgramada": {
+    "table": {
+      "tableName": "FechaProgramada",
+      "comment": ""
+    },
+    "columns": [
+      {
+        "tableName": "FechaProgramada",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "FechaProgramada",
+        "columnName": "fechaHora",
+        "comment": ""
+      },
+      {
+        "tableName": "FechaProgramada",
+        "columnName": "tareaId",
+        "comment": ""
+      }
+    ]
+  },
+  "Reuniones": {
+    "table": {
+      "tableName": "Reuniones",
+      "comment": ""
+    },
+    "columns": [
+      {
+        "tableName": "Reuniones",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "Reuniones",
+        "columnName": "nombreReunion",
+        "comment": ""
+      },
+      {
+        "tableName": "Reuniones",
+        "columnName": "fechaReunion",
+        "comment": ""
+      },
+      {
+        "tableName": "Reuniones",
+        "columnName": "fechaSegundaReunion",
+        "comment": ""
+      },
+      {
+        "tableName": "Reuniones",
+        "columnName": "grupoId",
+        "comment": ""
+      }
+    ]
+  },
+  "Tarea": {
+    "table": {
+      "tableName": "Tarea",
+      "comment": ""
+    },
+    "columns": [
+      {
+        "tableName": "Tarea",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "Tarea",
+        "columnName": "nombre",
+        "comment": ""
+      },
+      {
+        "tableName": "Tarea",
+        "columnName": "responsableId",
+        "comment": ""
+      },
+      {
+        "tableName": "Tarea",
+        "columnName": "actividadId",
+        "comment": ""
+      },
+      {
+        "tableName": "Tarea",
+        "columnName": "resultado",
+        "comment": ""
+      },
+      {
+        "tableName": "Tarea",
+        "columnName": "acta",
+        "comment": ""
+      }
+    ]
+  },
+  "TareaUsuario": {
+    "table": {
+      "tableName": "TareaUsuario",
+      "comment": ""
+    },
+    "columns": [
+      {
+        "tableName": "TareaUsuario",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "TareaUsuario",
+        "columnName": "usuarioId",
+        "comment": ""
+      },
+      {
+        "tableName": "TareaUsuario",
+        "columnName": "tareaId",
+        "comment": ""
+      }
+    ]
+  },
   "grupo": {
     "table": {
       "tableName": "grupo",
-      "comment": "The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client."
+      "comment": ""
     },
     "columns": [
       {
