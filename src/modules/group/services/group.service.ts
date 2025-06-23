@@ -6,6 +6,7 @@ export class GroupService {
 	constructor(private db: SimplePrismaService) {}
 
 	create(createGroupDto: any) {
+		console.log(createGroupDto);
 		const [periodo_inicio, periodo_fin] = createGroupDto.periodo;
 		return this.db.grupo.create({
 			data: {

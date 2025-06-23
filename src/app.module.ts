@@ -17,6 +17,7 @@ import { createKeyv } from '@keyv/redis';
 import { ScheduleModule } from '@nestjs/schedule';
 import { MeetModule } from './modules/meet/meet.module';
 import { GroupModule } from './modules/group/group.module';
+import { ActivityModule } from './modules/activity/activity.module';
 
 @Module({
 	imports: [
@@ -68,6 +69,7 @@ import { GroupModule } from './modules/group/group.module';
 		AttachmentsModule,
 		MeetModule,
 		GroupModule,
+		ActivityModule,
 	],
 	controllers: [],
 	providers: [],

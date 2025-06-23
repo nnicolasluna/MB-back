@@ -411,5 +411,81 @@
         "comment": "Código único del registro"
       }
     ]
+  },
+  "grupo": {
+    "table": {
+      "tableName": "grupo",
+      "comment": "The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client."
+    },
+    "columns": [
+      {
+        "tableName": "grupo",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "grupo",
+        "columnName": "nombre",
+        "comment": ""
+      },
+      {
+        "tableName": "grupo",
+        "columnName": "periodo_inicio",
+        "comment": ""
+      },
+      {
+        "tableName": "grupo",
+        "columnName": "periodo_fin",
+        "comment": ""
+      },
+      {
+        "tableName": "grupo",
+        "columnName": "fecha_crea",
+        "comment": ""
+      },
+      {
+        "tableName": "grupo",
+        "columnName": "fecha_modifica",
+        "comment": ""
+      },
+      {
+        "tableName": "grupo",
+        "columnName": "fecha_elimina",
+        "comment": ""
+      }
+    ]
+  },
+  "spatial_ref_sys": {
+    "table": {
+      "tableName": "spatial_ref_sys",
+      "comment": "This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info."
+    },
+    "columns": [
+      {
+        "tableName": "spatial_ref_sys",
+        "columnName": "srid",
+        "comment": ""
+      },
+      {
+        "tableName": "spatial_ref_sys",
+        "columnName": "auth_name",
+        "comment": ""
+      },
+      {
+        "tableName": "spatial_ref_sys",
+        "columnName": "auth_srid",
+        "comment": ""
+      },
+      {
+        "tableName": "spatial_ref_sys",
+        "columnName": "srtext",
+        "comment": ""
+      },
+      {
+        "tableName": "spatial_ref_sys",
+        "columnName": "proj4text",
+        "comment": ""
+      }
+    ]
   }
 }

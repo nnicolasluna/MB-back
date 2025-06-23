@@ -151,11 +151,66 @@ ALTER TABLE "public"."usuario" ADD CONSTRAINT "usuario_id_rol_fkey" FOREIGN KEY 
 
 
 CREATE TABLE "public"."grupo" (
-    "id" SERIAL NOT NULL,
+    "id" SERIAL PRIMARY KEY,
     "nombre" VARCHAR(200) NOT NULL,
     "periodo_inicio" DATE,
     "periodo_fin" DATE,
     "fecha_crea" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "fecha_modifica" TIMESTAMP(3),
     "fecha_elimina" TIMESTAMP(3)
+);
+
+CREATE TABLE "public"."Actividad" (
+    "id" SERIAL PRIMARY KEY,
+    "nombre" VARCHAR(255) NOT NULL,
+    "tipo" VARCHAR(255) NOT NULL,
+    "grupoId" INTEGER NOT NULL,
+    CONSTRAINT "fk_actividad_grupo" FOREIGN KEY ("grupoId") REFERENCES "public"."grupo"("id") ON DELETE CASCADE
+);
+
+
+CREATE TABLE "public"."Reuniones" (
+    "id" SERIAL PRIMARY KEY,
+    "nombreReunion" VARCHAR(255) NOT NULL,
+    "fechaReunion" TIMESTAMP NOT NULL,
+    "fechaSegundaReunion" TIMESTAMP,
+    "grupoId" INTEGER NOT NULL,
+    CONSTRAINT "fk_reuniones_grupo" FOREIGN KEY ("grupoId") REFERENCES "public"."grupo"("id") ON DELETE CASCADE
+);
+
+
+CREATE TABLE "public"."Acta" (
+    "id" SERIAL PRIMARY KEY,
+    "nombreActa" VARCHAR(255) NOT NULL,
+    "reunionId" INTEGER NOT NULL,
+    CONSTRAINT "fk_acta_reunion" FOREIGN KEY ("reunionId") REFERENCES "public"."Reuniones"("id") ON DELETE CASCADE
+);
+
+
+CREATE TABLE "public"."Tarea" (
+    "id" SERIAL PRIMARY KEY,
+    "nombre" VARCHAR(255) NOT NULL,
+    "responsableId" INTEGER NOT NULL,
+    "actividadId" INTEGER NOT NULL,
+    "resultado" TEXT,
+    "acta" TEXT,
+    CONSTRAINT "fk_tarea_responsable" FOREIGN KEY ("responsableId") REFERENCES "public"."usuario"("id") ON DELETE CASCADE,
+    CONSTRAINT "fk_tarea_actividad" FOREIGN KEY ("actividadId") REFERENCES "public"."Actividad"("id") ON DELETE CASCADE
+);
+
+
+CREATE TABLE "public"."TareaUsuario" (
+    "id" SERIAL PRIMARY KEY,
+    "usuarioId" INTEGER NOT NULL,
+    "tareaId" INTEGER NOT NULL,
+    CONSTRAINT "fk_tareausuario_usuario" FOREIGN KEY ("usuarioId") REFERENCES "public"."usuario"("id") ON DELETE CASCADE,
+    CONSTRAINT "fk_tareausuario_tarea" FOREIGN KEY ("tareaId") REFERENCES "public"."Tarea"("id") ON DELETE CASCADE
+);
+
+
+CREATE TABLE "public"."FechaProgramada" (
+    "id" SERIAL PRIMARY KEY,
+    "fechaHora" TIMESTAMP NOT NULL,
+    "tareaId" INTEGER NOT NULL,
+    CONSTRAINT "fk_fechaprogramada_tarea" FOREIGN KEY ("tareaId") REFERENCES "public"."Tarea"("id") ON DELETE CASCADE
 );
