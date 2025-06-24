@@ -16,5 +16,5 @@ RUN npm install --no-audit --progress=false; \
 	npm run prisma:generate; \
 	npm run build;
 
-CMD ["bash", "-c", "npm run prisma:generate && npm run prisma:migrate:prod && npm run prisma:seed && npm run script:sql && npm run start:prod"]
+CMD ["bash", "-c", "npm run prisma:generate && npm run prisma:migrate:prod && npm run prisma:seed && npm run start:prod"]
 

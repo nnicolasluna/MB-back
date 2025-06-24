@@ -62,7 +62,8 @@ model User {
   logActivities LogActivity[]
 
   ...auditFields
-
+  Tarea                      Tarea[]
+  TareaUsuario               TareaUsuario[]
   @@unique([username, email], map: "nombre_usuario_correo")
   @@map("usuario")
   @@schema("public")

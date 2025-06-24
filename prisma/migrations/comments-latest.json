@@ -1,4 +1,215 @@
 {
+  "Acta": {
+    "table": {
+      "tableName": "Acta",
+      "comment": ""
+    },
+    "columns": [
+      {
+        "tableName": "Acta",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "Acta",
+        "columnName": "nombreActa",
+        "comment": ""
+      },
+      {
+        "tableName": "Acta",
+        "columnName": "reunionId",
+        "comment": ""
+      }
+    ]
+  },
+  "Actividad": {
+    "table": {
+      "tableName": "Actividad",
+      "comment": ""
+    },
+    "columns": [
+      {
+        "tableName": "Actividad",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "Actividad",
+        "columnName": "nombre",
+        "comment": ""
+      },
+      {
+        "tableName": "Actividad",
+        "columnName": "tipo",
+        "comment": ""
+      },
+      {
+        "tableName": "Actividad",
+        "columnName": "grupoId",
+        "comment": ""
+      }
+    ]
+  },
+  "FechaProgramada": {
+    "table": {
+      "tableName": "FechaProgramada",
+      "comment": ""
+    },
+    "columns": [
+      {
+        "tableName": "FechaProgramada",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "FechaProgramada",
+        "columnName": "fechaHora",
+        "comment": ""
+      },
+      {
+        "tableName": "FechaProgramada",
+        "columnName": "tareaId",
+        "comment": ""
+      }
+    ]
+  },
+  "Reuniones": {
+    "table": {
+      "tableName": "Reuniones",
+      "comment": ""
+    },
+    "columns": [
+      {
+        "tableName": "Reuniones",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "Reuniones",
+        "columnName": "nombreReunion",
+        "comment": ""
+      },
+      {
+        "tableName": "Reuniones",
+        "columnName": "fechaReunion",
+        "comment": ""
+      },
+      {
+        "tableName": "Reuniones",
+        "columnName": "fechaSegundaReunion",
+        "comment": ""
+      },
+      {
+        "tableName": "Reuniones",
+        "columnName": "grupoId",
+        "comment": ""
+      }
+    ]
+  },
+  "Tarea": {
+    "table": {
+      "tableName": "Tarea",
+      "comment": ""
+    },
+    "columns": [
+      {
+        "tableName": "Tarea",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "Tarea",
+        "columnName": "nombre",
+        "comment": ""
+      },
+      {
+        "tableName": "Tarea",
+        "columnName": "responsableId",
+        "comment": ""
+      },
+      {
+        "tableName": "Tarea",
+        "columnName": "actividadId",
+        "comment": ""
+      },
+      {
+        "tableName": "Tarea",
+        "columnName": "resultado",
+        "comment": ""
+      },
+      {
+        "tableName": "Tarea",
+        "columnName": "acta",
+        "comment": ""
+      }
+    ]
+  },
+  "TareaUsuario": {
+    "table": {
+      "tableName": "TareaUsuario",
+      "comment": ""
+    },
+    "columns": [
+      {
+        "tableName": "TareaUsuario",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "TareaUsuario",
+        "columnName": "usuarioId",
+        "comment": ""
+      },
+      {
+        "tableName": "TareaUsuario",
+        "columnName": "tareaId",
+        "comment": ""
+      }
+    ]
+  },
+  "grupo": {
+    "table": {
+      "tableName": "grupo",
+      "comment": ""
+    },
+    "columns": [
+      {
+        "tableName": "grupo",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "grupo",
+        "columnName": "nombre",
+        "comment": ""
+      },
+      {
+        "tableName": "grupo",
+        "columnName": "periodo_inicio",
+        "comment": ""
+      },
+      {
+        "tableName": "grupo",
+        "columnName": "periodo_fin",
+        "comment": ""
+      },
+      {
+        "tableName": "grupo",
+        "columnName": "fecha_crea",
+        "comment": ""
+      },
+      {
+        "tableName": "grupo",
+        "columnName": "fecha_modifica",
+        "comment": ""
+      },
+      {
+        "tableName": "grupo",
+        "columnName": "fecha_elimina",
+        "comment": ""
+      }
+    ]
+  },
   "archivos": {
     "table": {
       "tableName": "archivos",
@@ -409,250 +620,6 @@
         "tableName": "usuario",
         "columnName": "codigo",
         "comment": "Código único del registro"
-      }
-    ]
-  },
-  "Acta": {
-    "table": {
-      "tableName": "Acta",
-      "comment": ""
-    },
-    "columns": [
-      {
-        "tableName": "Acta",
-        "columnName": "id",
-        "comment": ""
-      },
-      {
-        "tableName": "Acta",
-        "columnName": "nombreActa",
-        "comment": ""
-      },
-      {
-        "tableName": "Acta",
-        "columnName": "reunionId",
-        "comment": ""
-      }
-    ]
-  },
-  "Actividad": {
-    "table": {
-      "tableName": "Actividad",
-      "comment": ""
-    },
-    "columns": [
-      {
-        "tableName": "Actividad",
-        "columnName": "id",
-        "comment": ""
-      },
-      {
-        "tableName": "Actividad",
-        "columnName": "nombre",
-        "comment": ""
-      },
-      {
-        "tableName": "Actividad",
-        "columnName": "tipo",
-        "comment": ""
-      },
-      {
-        "tableName": "Actividad",
-        "columnName": "grupoId",
-        "comment": ""
-      }
-    ]
-  },
-  "FechaProgramada": {
-    "table": {
-      "tableName": "FechaProgramada",
-      "comment": ""
-    },
-    "columns": [
-      {
-        "tableName": "FechaProgramada",
-        "columnName": "id",
-        "comment": ""
-      },
-      {
-        "tableName": "FechaProgramada",
-        "columnName": "fechaHora",
-        "comment": ""
-      },
-      {
-        "tableName": "FechaProgramada",
-        "columnName": "tareaId",
-        "comment": ""
-      }
-    ]
-  },
-  "Reuniones": {
-    "table": {
-      "tableName": "Reuniones",
-      "comment": ""
-    },
-    "columns": [
-      {
-        "tableName": "Reuniones",
-        "columnName": "id",
-        "comment": ""
-      },
-      {
-        "tableName": "Reuniones",
-        "columnName": "nombreReunion",
-        "comment": ""
-      },
-      {
-        "tableName": "Reuniones",
-        "columnName": "fechaReunion",
-        "comment": ""
-      },
-      {
-        "tableName": "Reuniones",
-        "columnName": "fechaSegundaReunion",
-        "comment": ""
-      },
-      {
-        "tableName": "Reuniones",
-        "columnName": "grupoId",
-        "comment": ""
-      }
-    ]
-  },
-  "Tarea": {
-    "table": {
-      "tableName": "Tarea",
-      "comment": ""
-    },
-    "columns": [
-      {
-        "tableName": "Tarea",
-        "columnName": "id",
-        "comment": ""
-      },
-      {
-        "tableName": "Tarea",
-        "columnName": "nombre",
-        "comment": ""
-      },
-      {
-        "tableName": "Tarea",
-        "columnName": "responsableId",
-        "comment": ""
-      },
-      {
-        "tableName": "Tarea",
-        "columnName": "actividadId",
-        "comment": ""
-      },
-      {
-        "tableName": "Tarea",
-        "columnName": "resultado",
-        "comment": ""
-      },
-      {
-        "tableName": "Tarea",
-        "columnName": "acta",
-        "comment": ""
-      }
-    ]
-  },
-  "TareaUsuario": {
-    "table": {
-      "tableName": "TareaUsuario",
-      "comment": ""
-    },
-    "columns": [
-      {
-        "tableName": "TareaUsuario",
-        "columnName": "id",
-        "comment": ""
-      },
-      {
-        "tableName": "TareaUsuario",
-        "columnName": "usuarioId",
-        "comment": ""
-      },
-      {
-        "tableName": "TareaUsuario",
-        "columnName": "tareaId",
-        "comment": ""
-      }
-    ]
-  },
-  "grupo": {
-    "table": {
-      "tableName": "grupo",
-      "comment": ""
-    },
-    "columns": [
-      {
-        "tableName": "grupo",
-        "columnName": "id",
-        "comment": ""
-      },
-      {
-        "tableName": "grupo",
-        "columnName": "nombre",
-        "comment": ""
-      },
-      {
-        "tableName": "grupo",
-        "columnName": "periodo_inicio",
-        "comment": ""
-      },
-      {
-        "tableName": "grupo",
-        "columnName": "periodo_fin",
-        "comment": ""
-      },
-      {
-        "tableName": "grupo",
-        "columnName": "fecha_crea",
-        "comment": ""
-      },
-      {
-        "tableName": "grupo",
-        "columnName": "fecha_modifica",
-        "comment": ""
-      },
-      {
-        "tableName": "grupo",
-        "columnName": "fecha_elimina",
-        "comment": ""
-      }
-    ]
-  },
-  "spatial_ref_sys": {
-    "table": {
-      "tableName": "spatial_ref_sys",
-      "comment": "This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info."
-    },
-    "columns": [
-      {
-        "tableName": "spatial_ref_sys",
-        "columnName": "srid",
-        "comment": ""
-      },
-      {
-        "tableName": "spatial_ref_sys",
-        "columnName": "auth_name",
-        "comment": ""
-      },
-      {
-        "tableName": "spatial_ref_sys",
-        "columnName": "auth_srid",
-        "comment": ""
-      },
-      {
-        "tableName": "spatial_ref_sys",
-        "columnName": "srtext",
-        "comment": ""
-      },
-      {
-        "tableName": "spatial_ref_sys",
-        "columnName": "proj4text",
-        "comment": ""
       }
     ]
   }
