@@ -58,8 +58,8 @@ CREATE TABLE "public"."Tarea" (
 -- CreateTable
 CREATE TABLE "public"."TareaUsuario" (
     "id" SERIAL NOT NULL,
+    "grupoId" INTEGER NOT NULL,
     "usuarioId" INTEGER NOT NULL,
-    "tareaId" INTEGER NOT NULL,
 
     CONSTRAINT "TareaUsuario_pkey" PRIMARY KEY ("id")
 );
@@ -251,10 +251,10 @@ ALTER TABLE "public"."Tarea" ADD CONSTRAINT "fk_tarea_actividad" FOREIGN KEY ("a
 ALTER TABLE "public"."Tarea" ADD CONSTRAINT "fk_tarea_responsable" FOREIGN KEY ("responsableId") REFERENCES "public"."usuario"("id") ON DELETE CASCADE ON UPDATE NO ACTION;
 
 -- AddForeignKey
-ALTER TABLE "public"."TareaUsuario" ADD CONSTRAINT "fk_tareausuario_tarea" FOREIGN KEY ("tareaId") REFERENCES "public"."Tarea"("id") ON DELETE CASCADE ON UPDATE NO ACTION;
+ALTER TABLE "public"."TareaUsuario" ADD CONSTRAINT "fk_tareausuario_usuario" FOREIGN KEY ("usuarioId") REFERENCES "public"."usuario"("id") ON DELETE CASCADE ON UPDATE NO ACTION;
 
 -- AddForeignKey
-ALTER TABLE "public"."TareaUsuario" ADD CONSTRAINT "fk_tareausuario_usuario" FOREIGN KEY ("usuarioId") REFERENCES "public"."usuario"("id") ON DELETE CASCADE ON UPDATE NO ACTION;
+ALTER TABLE "public"."TareaUsuario" ADD CONSTRAINT "fk_tareausuario_grupo" FOREIGN KEY ("grupoId") REFERENCES "public"."grupo"("id") ON DELETE CASCADE ON UPDATE NO ACTION;
 
 -- AddForeignKey
 ALTER TABLE "public"."Subdocumentos" ADD CONSTRAINT "Subdocumentos_documentosId_fkey" FOREIGN KEY ("documentosId") REFERENCES "public"."documentos"("id") ON DELETE CASCADE ON UPDATE NO ACTION;

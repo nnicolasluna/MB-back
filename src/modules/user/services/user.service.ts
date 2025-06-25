@@ -1,4 +1,11 @@
-import { ConflictException, HttpException, Injectable, Logger, NotFoundException } from '@nestjs/common';
+import {
+	ConflictException,
+	HttpException,
+	Injectable,
+	InternalServerErrorException,
+	Logger,
+	NotFoundException,
+} from '@nestjs/common';
 import { UsersFilter } from '../dto/user/user.filter';
 import { DBConnection } from 'src/shared/db/prisma';
 import { FormUserDto } from '../dto/user/form-user.dto';
@@ -151,38 +158,44 @@ export class UserService {
 	}
 
 	async updateStatus({ id, status }: UpdateStatusDto) {
-		this.logger.log(`Updating user status with id: ${id} and status: ${status}`);
+		try {
+			this.logger.log(`Updating user status with id: ${id} and status: ${status}`);
 
-		let isAproved = false;
+			let isAproved = false;
 
-		let data = { userStatus: status };
+			let data = { userStatus: status };
 
-		switch (status) {
-			case UserStatus.APROVE:
-				isAproved = true;
-				const verification = await this.aprove(id);
-				data = {
-					...data,
-					...verification,
-				};
-				break;
-			case UserStatus.DISABLED:
-				const newData = await this.disable();
-				data = {
-					...data,
-					...newData,
-				};
-				break;
+			switch (status) {
+				case UserStatus.APROVE:
+					isAproved = true;
+					const verification = await this.aprove(id);
+					data = {
+						...data,
+						...verification,
+					};
+					break;
+				case UserStatus.DISABLED:
+					const newData = await this.disable();
+					data = {
+						...data,
+						...newData,
+					};
+					break;
+			}
+
+			const updateUser = await this.db.user.update({
+				where: { id },
+				data,
+				include: { role: true, image: true },
+			});
+
+			if (isAproved) await this.emailService.sendVerificationEmail(updateUser);
+
+			return new UserResponse(updateUser);
+		} catch (error) {
+			this.logger.error('Error updating user status', error);
+			console.log(error);
+			throw new InternalServerErrorException('Failed to update user status');
 		}
-
-		const updateUser = await this.db.user.update({
-			where: { id },
-			data,
-			include: { role: true, image: true },
-		});
-
-		if (isAproved) await this.emailService.sendVerificationEmail(updateUser);
-
-		return new UserResponse(updateUser);
 	}
 }

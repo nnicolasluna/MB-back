@@ -3,49 +3,40 @@ import { SimplePrismaService } from '@shared/db/prisma.simple';
 
 @Injectable()
 export class ActivityService {
-	constructor(private db: SimplePrismaService) { }
+	constructor(private db: SimplePrismaService) {}
 
 	async create(data: any) {
-		const { actividad, tareas } = data;
-
-		// 1. Crear Actividad
-		const nuevaActividad = await this.db.actividad.create({
+		const actividad = await this.db.actividad.create({
 			data: {
-				nombre: actividad.actividad,
-				tipo: actividad.TipoActividad.name,
-				grupoId: tareas[0].grupo.id,
+				nombre: data.actividad.actividad,
+				tipo: data.actividad.TipoActividad.name,
+				grupo: {
+					connect: { id: data.actividad.grupo.id },
+				},
 			},
 		});
 
-		// 2. Crear las tareas asociadas
-		for (const t of tareas) {
+		for (const tarea of data.tareas ?? []) {
 			const nuevaTarea = await this.db.tarea.create({
 				data: {
-					nombre: t.tarea,
-					resultado: t.resultado,
-					actividadId: nuevaActividad.id,
-					responsableId: t.responsable.id,
+					nombre: tarea.tarea,
+					resultado: tarea.resultado,
+					responsableId: tarea.responsable.id,
+					actividadId: actividad.id,
 				},
 			});
 
-			// 3. Crear fechas programadas
-			await this.db.fechaProgramada.createMany({
-				data: t.fechas.map((fecha) => ({
-					fechaHora: new Date(fecha),
-					tareaId: nuevaTarea.id,
-				})),
-			});
-
-			// 4. Participantes (TareaUsuario)
-			await this.db.tareaUsuario.createMany({
-				data: t.participantes.map((p) => ({
-					usuarioId: p.id,
-					tareaId: nuevaTarea.id,
-				})),
-			});
+			for (const fecha of tarea.fechas ?? []) {
+				await this.db.fechaProgramada.create({
+					data: {
+						fechaHora: new Date(fecha),
+						tareaId: nuevaTarea.id,
+					},
+				});
+			}
 		}
 
-		return { message: 'Actividad y tareas registradas con éxito' };
+		return { message: 'Actividad y tareas creadas correctamente' };
 	}
 	async findAll() {
 		const data = await this.db.actividad.findMany({

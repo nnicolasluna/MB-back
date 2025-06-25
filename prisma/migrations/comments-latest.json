@@ -157,12 +157,12 @@
       },
       {
         "tableName": "TareaUsuario",
-        "columnName": "usuarioId",
+        "columnName": "grupoId",
         "comment": ""
       },
       {
         "tableName": "TareaUsuario",
-        "columnName": "tareaId",
+        "columnName": "usuarioId",
         "comment": ""
       }
     ]

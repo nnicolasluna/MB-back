@@ -5,15 +5,41 @@ import { SimplePrismaService } from '@shared/db/prisma.simple';
 export class GroupService {
 	constructor(private db: SimplePrismaService) {}
 
-	create(createGroupDto: any) {
-		const [periodo_inicio, periodo_fin] = createGroupDto.periodo;
+	async create(createGroupDto: any) {
+		/* const [periodo_inicio, periodo_fin] = createGroupDto.periodo;
 		return this.db.grupo.create({
 			data: {
 				nombre: createGroupDto.nombre,
 				periodo_inicio: new Date(periodo_inicio),
 				periodo_fin: new Date(periodo_fin),
 			},
+		}); */
+		const [periodo_inicio, periodo_fin] = createGroupDto.periodo;
+
+		// 1. Crear grupo primero
+		const grupo = await this.db.grupo.create({
+			data: {
+				nombre: createGroupDto.nombre,
+				periodo_inicio: new Date(periodo_inicio),
+				periodo_fin: new Date(periodo_fin),
+			},
 		});
+
+		// 2. Crear registros en TareaUsuario para cada participante
+		const participantes = createGroupDto.participantes ?? [];
+
+		await Promise.all(
+			participantes.map((user: any) =>
+				this.db.tareaUsuario.create({
+					data: {
+						grupoId: grupo.id,
+						usuarioId: user.id,
+					},
+				}),
+			),
+		);
+
+		return grupo;
 	}
 
 	async findAll() {
