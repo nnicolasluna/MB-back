@@ -210,6 +210,87 @@
       }
     ]
   },
+  "documentos": {
+    "table": {
+      "tableName": "documentos",
+      "comment": ""
+    },
+    "columns": [
+      {
+        "tableName": "documentos",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "documentos",
+        "columnName": "titulo",
+        "comment": ""
+      },
+      {
+        "tableName": "documentos",
+        "columnName": "tipoVizualizacion",
+        "comment": ""
+      },
+      {
+        "tableName": "documentos",
+        "columnName": "fecha_crea",
+        "comment": ""
+      },
+      {
+        "tableName": "documentos",
+        "columnName": "fecha_modifica",
+        "comment": ""
+      },
+      {
+        "tableName": "documentos",
+        "columnName": "fecha_elimina",
+        "comment": ""
+      }
+    ]
+  },
+  "Subdocumentos": {
+    "table": {
+      "tableName": "Subdocumentos",
+      "comment": ""
+    },
+    "columns": [
+      {
+        "tableName": "Subdocumentos",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "Subdocumentos",
+        "columnName": "tituloSub",
+        "comment": ""
+      },
+      {
+        "tableName": "Subdocumentos",
+        "columnName": "nombreArchivo",
+        "comment": ""
+      },
+      {
+        "tableName": "Subdocumentos",
+        "columnName": "fecha_crea",
+        "comment": ""
+      },
+      {
+        "tableName": "Subdocumentos",
+        "columnName": "fecha_modifica",
+        "comment": ""
+      },
+      {
+        "tableName": "Subdocumentos",
+        "columnName": "fecha_elimina",
+        "comment": ""
+      },
+      {
+        "tableName": "Subdocumentos",
+        "columnName": "documentosId",
+        "comment": ""
+      }
+    ]
+  },
   "archivos": {
     "table": {
       "tableName": "archivos",

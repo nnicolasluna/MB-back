@@ -92,3 +92,25 @@ model grupo {
 
   @@schema("public")
 }
+
+model documentos {
+  id             Int         @id @default(autoincrement())
+  titulo         String      @db.VarChar(200)
+  tipoVizualizacion         String      @db.VarChar(200)
+  fecha_crea     DateTime?   @default(now())
+  fecha_modifica DateTime?
+  fecha_elimina  DateTime?
+  subdocumentos Subdocumentos[] 
+  @@schema("public")
+}
+model Subdocumentos {
+  id             Int         @id @default(autoincrement())
+  tituloSub         String      @db.VarChar(200)
+  nombreArchivo         String      @db.VarChar(200)
+  fecha_crea     DateTime?   @default(now())
+  fecha_modifica DateTime?
+  fecha_elimina  DateTime?
+  documentos    documentos     @relation(fields: [documentosId], references: [id],onDelete: Cascade, onUpdate: NoAction) 
+  documentosId  Int   
+  @@schema("public")
+}

@@ -78,6 +78,31 @@ CREATE TABLE "public"."grupo" (
 );
 
 -- CreateTable
+CREATE TABLE "public"."documentos" (
+    "id" SERIAL NOT NULL,
+    "titulo" VARCHAR(200) NOT NULL,
+    "tipoVizualizacion" VARCHAR(200) NOT NULL,
+    "fecha_crea" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "fecha_modifica" TIMESTAMP(3),
+    "fecha_elimina" TIMESTAMP(3),
+
+    CONSTRAINT "documentos_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "public"."Subdocumentos" (
+    "id" SERIAL NOT NULL,
+    "tituloSub" VARCHAR(200) NOT NULL,
+    "nombreArchivo" VARCHAR(200) NOT NULL,
+    "fecha_crea" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "fecha_modifica" TIMESTAMP(3),
+    "fecha_elimina" TIMESTAMP(3),
+    "documentosId" INTEGER NOT NULL,
+
+    CONSTRAINT "Subdocumentos_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "public"."archivos" (
     "id" SERIAL NOT NULL,
     "nombre" VARCHAR(500) NOT NULL,
@@ -230,6 +255,9 @@ ALTER TABLE "public"."TareaUsuario" ADD CONSTRAINT "fk_tareausuario_tarea" FOREI
 
 -- AddForeignKey
 ALTER TABLE "public"."TareaUsuario" ADD CONSTRAINT "fk_tareausuario_usuario" FOREIGN KEY ("usuarioId") REFERENCES "public"."usuario"("id") ON DELETE CASCADE ON UPDATE NO ACTION;
+
+-- AddForeignKey
+ALTER TABLE "public"."Subdocumentos" ADD CONSTRAINT "Subdocumentos_documentosId_fkey" FOREIGN KEY ("documentosId") REFERENCES "public"."documentos"("id") ON DELETE CASCADE ON UPDATE NO ACTION;
 
 -- AddForeignKey
 ALTER TABLE "public"."log_actividad" ADD CONSTRAINT "log_actividad_id_usuario_fkey" FOREIGN KEY ("id_usuario") REFERENCES "public"."usuario"("id") ON DELETE SET NULL ON UPDATE CASCADE;

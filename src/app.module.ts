@@ -18,6 +18,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { MeetModule } from './modules/meet/meet.module';
 import { GroupModule } from './modules/group/group.module';
 import { ActivityModule } from './modules/activity/activity.module';
+import { DocsModule } from './modules/docs/docs.module';
 
 @Module({
 	imports: [
@@ -70,6 +71,7 @@ import { ActivityModule } from './modules/activity/activity.module';
 		MeetModule,
 		GroupModule,
 		ActivityModule,
+		DocsModule,
 	],
 	controllers: [],
 	providers: [],

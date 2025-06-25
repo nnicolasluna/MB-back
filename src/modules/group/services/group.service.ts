@@ -6,7 +6,6 @@ export class GroupService {
 	constructor(private db: SimplePrismaService) {}
 
 	create(createGroupDto: any) {
-		console.log(createGroupDto);
 		const [periodo_inicio, periodo_fin] = createGroupDto.periodo;
 		return this.db.grupo.create({
 			data: {
@@ -18,11 +17,10 @@ export class GroupService {
 	}
 
 	async findAll() {
-		/* return this.db.grupo.findMany(); */
 		const grupos = await this.db.grupo.findMany();
 
 		return {
-			items: grupos, // mantiene los campos tal cual: id, nombre, periodo_inicio, periodo_fin
+			items: grupos,
 			total: grupos.length,
 		};
 	}
