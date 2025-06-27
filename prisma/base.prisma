@@ -105,11 +105,12 @@ model documentos {
 model Subdocumentos {
   id             Int         @id @default(autoincrement())
   tituloSub         String      @db.VarChar(200)
-  nombreArchivo         String      @db.VarChar(200)
+  nombreArchivo         String?      @db.VarChar(200)
+  documentosId  Int   
   fecha_crea     DateTime?   @default(now())
   fecha_modifica DateTime?
   fecha_elimina  DateTime?
   documentos    documentos     @relation(fields: [documentosId], references: [id],onDelete: Cascade, onUpdate: NoAction) 
-  documentosId  Int   
+  
   @@schema("public")
 }

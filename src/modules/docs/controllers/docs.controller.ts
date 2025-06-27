@@ -3,11 +3,11 @@ import { DocsService } from '../services/docs.service';
 
 @Controller('docs')
 export class DocsController {
-	constructor(private readonly docsService: DocsService) {}
+	constructor(private readonly docsService: DocsService) { }
 
 	@Post()
-	create(@Body() createDocDto: any) {
-		return this.docsService.create(createDocDto);
+	create(@Body() create: any) {
+		return this.docsService.create(create);
 	}
 
 	@Get()

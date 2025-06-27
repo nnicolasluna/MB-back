@@ -3,7 +3,7 @@ import { SimplePrismaService } from '@shared/db/prisma.simple';
 
 @Injectable()
 export class SubDocsService {
-	constructor(private db: SimplePrismaService) {}
+	constructor(private db: SimplePrismaService) { }
 	async create(createDocDto: any) {
 		const { tituloSub, nombreArchivo, documentosId } = createDocDto;
 
@@ -11,12 +11,17 @@ export class SubDocsService {
 			data: {
 				tituloSub,
 				nombreArchivo,
-				documentosId,
+				documentos: {
+					connect: {
+						id: documentosId,
+					},
+				},
 			},
 		});
 	}
 
 	async findAll() {
+		console.log('hola mundo');
 		const data = await this.db.subdocumentos.findMany();
 
 		return {
@@ -31,7 +36,19 @@ export class SubDocsService {
 		});
 	}
 
-	update(id: number, updateDocDto: any) {
-		return updateDocDto;
+	update(id: number, data: any) {
+		const { tituloSub, nombreArchivo } = data;
+		return this.db.subdocumentos.update({
+			where: { id },
+			data: {
+				tituloSub,
+				nombreArchivo,
+			},
+		});
+	}
+	remove(id: number) {
+		return this.db.subdocumentos.delete({
+			where: { id },
+		});
 	}
 }
