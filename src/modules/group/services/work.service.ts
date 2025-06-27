@@ -3,7 +3,7 @@ import { SimplePrismaService } from '@shared/db/prisma.simple';
 
 @Injectable()
 export class WorkService {
-	constructor(private db: SimplePrismaService) { }
+	constructor(private db: SimplePrismaService) {}
 
 	create(createDto: any) {
 		return this.db.reuniones.create({
@@ -27,10 +27,18 @@ export class WorkService {
 
 	findOne(id: number) {
 		return this.db.reuniones.findUnique({
-			where: { id },
+			where: {
+				id,
+			},
 		});
 	}
-
+	findByGrupoId(grupoId: number) {
+		return this.db.reuniones.findMany({
+			where: {
+				grupoId: grupoId,
+			},
+		});
+	}
 	update(id: number, updateDto: any) {
 		return this.db.reuniones.update({
 			where: { id },

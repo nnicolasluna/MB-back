@@ -30,11 +30,20 @@ export class DocsService {
 		});
 	}
 
-	update(id: number, updateDocDto: any) {
-		return updateDocDto;
+	async update(id: number, data: any) {
+		const { titulo, visualizacion } = data;
+		return this.db.documentos.update({
+			where: { id },
+			data: {
+				titulo,
+				tipoVizualizacion: visualizacion,
+			},
+		});
 	}
 
 	remove(id: number) {
-		return `This action removes a #${id} doc`;
+		return this.db.documentos.delete({
+			where: { id },
+		});
 	}
 }

@@ -18,9 +18,8 @@ export class WorkController {
 
 	@Get(':id')
 	findOne(@Param('id') id: string) {
-		return this.service.findOne(+id);
+		return this.service.findByGrupoId(+id);
 	}
-
 	@Patch(':id')
 	update(@Param('id') id: string, @Body() updateGroupDto: UpdateGroupDto) {
 		return this.service.update(+id, updateGroupDto);
