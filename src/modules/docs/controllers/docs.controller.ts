@@ -3,7 +3,7 @@ import { DocsService } from '../services/docs.service';
 
 @Controller('docs')
 export class DocsController {
-	constructor(private readonly docsService: DocsService) { }
+	constructor(private readonly docsService: DocsService) {}
 
 	@Post()
 	create(@Body() create: any) {

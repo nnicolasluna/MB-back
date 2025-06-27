@@ -271,6 +271,11 @@
       },
       {
         "tableName": "Subdocumentos",
+        "columnName": "documentosId",
+        "comment": ""
+      },
+      {
+        "tableName": "Subdocumentos",
         "columnName": "fecha_crea",
         "comment": ""
       },
@@ -282,11 +287,6 @@
       {
         "tableName": "Subdocumentos",
         "columnName": "fecha_elimina",
-        "comment": ""
-      },
-      {
-        "tableName": "Subdocumentos",
-        "columnName": "documentosId",
         "comment": ""
       }
     ]

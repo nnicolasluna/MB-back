@@ -1,9 +1,11 @@
-import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { SubDocsService } from '../services/Subdocs.service';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
 
 @Controller('subdocs')
 export class SubDocsController {
-	constructor(private readonly service: SubDocsService) { }
+	constructor(private readonly service: SubDocsService) {}
 
 	@Post()
 	create(@Body() createDocDto: any) {
@@ -28,5 +30,27 @@ export class SubDocsController {
 	@Delete(':id')
 	remove(@Param('id') id: string) {
 		return this.service.remove(+id);
+	}
+
+	@Post('update-file')
+	@UseInterceptors(
+		FileInterceptor('file', {
+			storage: diskStorage({
+				destination: './uploads', // o cualquier ruta que uses
+				filename: (req, file, cb) => {
+					// 👇 Aquí está el truco
+					console.log('>> Nombre recibido desde el frontend:', req.body.customName);
+					cb(null, file.originalname);
+				},
+			}),
+		}),
+	)
+	async uploadFile(@UploadedFile() file: Express.Multer.File, @Body() body: any) {
+		console.log('Archivo guardado como:', file.filename);
+
+		return {
+			message: 'Archivo subido correctamente',
+			filename: file.filename,
+		};
 	}
 }

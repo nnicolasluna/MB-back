@@ -3,7 +3,7 @@ import { SimplePrismaService } from '@shared/db/prisma.simple';
 
 @Injectable()
 export class SubDocsService {
-	constructor(private db: SimplePrismaService) { }
+	constructor(private db: SimplePrismaService) {}
 	async create(createDocDto: any) {
 		const { tituloSub, nombreArchivo, documentosId } = createDocDto;
 

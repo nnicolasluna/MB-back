@@ -66,5 +66,6 @@ storage/attachments/**/*.*
 !storage/public/carimbos/*
 upload/**/*.*
 !**/.deleteme
+uploads/
 
 /prisma/schema.prisma
