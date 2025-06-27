@@ -10,9 +10,6 @@ generator client {
   previewFeatures = ["fullTextSearchPostgres", "postgresqlExtensions", "multiSchema"]
 }
 
-generator comments {
-  provider = "prisma-db-comments-generator"
-}
 model Acta {
   id         Int       @id @default(autoincrement())
   nombreActa String    @db.VarChar(255)
@@ -70,51 +67,55 @@ model Tarea {
 
 model TareaUsuario {
   id        Int   @id @default(autoincrement())
-  grupoId    Int
-  usuarioId   Int
+  grupoId   Int
+  usuarioId Int
   usuario   User  @relation(fields: [usuarioId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_tareausuario_usuario")
-  grupo     grupo @relation(fields: [grupoId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_tareausuario_grupo") 
+  grupo     grupo @relation(fields: [grupoId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_tareausuario_grupo")
 
   @@schema("public")
 }
 
 model grupo {
-  id             Int         @id @default(autoincrement())
-  nombre         String      @db.VarChar(200)
-  periodo_inicio DateTime?   @db.Date
-  periodo_fin    DateTime?   @db.Date
-  fecha_crea     DateTime?   @default(now())
-  fecha_modifica DateTime?
-  fecha_elimina  DateTime?
-  Actividad      Actividad[]
-  Reuniones      Reuniones[]
-  TareaUsuario   TareaUsuario[] 
-  documentosGrupo  documentosGrupo[] 
+  id              Int               @id @default(autoincrement())
+  nombre          String            @db.VarChar(200)
+  periodo_inicio  DateTime?         @db.Date
+  periodo_fin     DateTime?         @db.Date
+  fecha_crea      DateTime?         @default(now())
+  fecha_modifica  DateTime?
+  fecha_elimina   DateTime?
+  Actividad       Actividad[]
+  Reuniones       Reuniones[]
+  TareaUsuario    TareaUsuario[]
+  documentosGrupo documentosGrupo[]
+
   @@schema("public")
 }
 
 model documentos {
-  id             Int         @id @default(autoincrement())
-  titulo         String      @db.VarChar(200)
-  tipoVizualizacion         String      @db.VarChar(200)
-  fecha_crea     DateTime?   @default(now())
-  fecha_modifica DateTime?
-  fecha_elimina  DateTime?
-  subdocumentos Subdocumentos[] 
+  id                Int             @id @default(autoincrement())
+  titulo            String          @db.VarChar(200)
+  tipoVizualizacion String          @db.VarChar(200)
+  fecha_crea        DateTime?       @default(now())
+  fecha_modifica    DateTime?
+  fecha_elimina     DateTime?
+  subdocumentos     Subdocumentos[]
+
   @@schema("public")
 }
+
 model Subdocumentos {
-  id             Int         @id @default(autoincrement())
-  tituloSub         String      @db.VarChar(200)
-  nombreArchivo         String?      @db.VarChar(200)
-  documentosId  Int   
-  fecha_crea     DateTime?   @default(now())
+  id             Int        @id @default(autoincrement())
+  tituloSub      String     @db.VarChar(200)
+  nombreArchivo  String?    @db.VarChar(200)
+  documentosId   Int
+  fecha_crea     DateTime?  @default(now())
   fecha_modifica DateTime?
   fecha_elimina  DateTime?
-  documentos    documentos     @relation(fields: [documentosId], references: [id],onDelete: Cascade, onUpdate: NoAction) 
-  
+  documentos     documentos @relation(fields: [documentosId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
   @@schema("public")
 }
+
 model documentosGrupo {
   id             Int       @id @default(autoincrement())
   nombre         String    @db.VarChar(200)
@@ -125,7 +126,7 @@ model documentosGrupo {
   fecha_modifica DateTime?
   fecha_elimina  DateTime?
 
-  grupo          grupo     @relation(fields: [grupoId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  grupo grupo @relation(fields: [grupoId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@schema("public")
 }
