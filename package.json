@@ -69,7 +69,6 @@
 		"@nestjs/cli": "11.0.5",
 		"@nestjs/schematics": "11.0.2",
 		"@nestjs/testing": "11.0.12",
-		"@onozaty/prisma-db-comments-generator": "1.1.0",
 		"@prisma-utils/prismerge": "1.7.0",
 		"@types/adm-zip": "0.5.7",
 		"@types/express": "5.0.1",
