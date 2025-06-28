@@ -41,6 +41,7 @@ export class ActivityService {
 	async findAll() {
 		const data = await this.db.actividad.findMany({
 			include: {
+				grupo: true,
 				Tarea: {
 					include: {
 						FechaProgramada: true,
@@ -58,11 +59,36 @@ export class ActivityService {
 		return `This action returns a #${id} activity`;
 	}
 
-	update(id: number, updateActivityDto: any) {
-		return updateActivityDto;
+	update(id: number, updateDto: any) {
+		return this.db.tarea.update({
+			where: { id },
+			data: {
+				acta: updateDto.acta,
+			},
+		});
 	}
 
 	remove(id: number) {
 		return `This action removes a #${id} activity`;
+	}
+	async findAllFechas() {
+		const data = await this.db.fechaProgramada.findMany({
+			include: {
+				Tarea: {
+					include: {
+						Actividad: {
+							include: {
+								grupo: true,
+							},
+						},
+					},
+				},
+			},
+		});
+
+		return {
+			items: data,
+			total: data.length,
+		};
 	}
 }

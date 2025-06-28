@@ -7,9 +7,12 @@ export const ResourceTypes = Object.freeze({
 	AGENDA: 'AGENDA',
 	GROUP: 'GROUP',
 	OFFICIAL: 'OFFICIAL',
+	EVENTS: 'EVENTS',
+	GROUPMEET: 'GROUPMEET',
 	MENU_DOCS: 'MENU_DOCS',
 	SYSTEM_PERMISSIONS: 'SYSTEM_PERMISSIONS',
 	LOG_ACTIVITIES: 'LOG_ACTIVITIES',
+	MENU_PROCEEDINGS: 'MENU_PROCEEDINGS',
 
 	// MENU_CONVOCATIONS: 'MENU_CONVOCATIONS', // Reuniones y Convocatorias
 	// SESSIONS: 'SESSIONS', // Administración de Sesiones
@@ -82,6 +85,21 @@ export const Resources = Object.freeze([
 	{
 		name: 'Documentos Oficiales',
 		code: ResourceTypes.OFFICIAL,
+		type: 'MODULE',
+	},
+	{
+		name: 'Seguimiento de Actas',
+		code: ResourceTypes.MENU_PROCEEDINGS,
+		type: 'VIEW',
+	},
+	{
+		name: 'Seguimiento de Actas',
+		code: ResourceTypes.EVENTS,
+		type: 'MODULE',
+	},
+	{
+		name: 'Reuniones y Sesiones por Grupo',
+		code: ResourceTypes.GROUPMEET,
 		type: 'MODULE',
 	},
 ]);

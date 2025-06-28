@@ -1,6 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, Put } from '@nestjs/common';
 import { UpdateActivityDto } from '../dto/update-activity.dto';
 import { ActivityService } from '../services/activity.service';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
 
 @Controller('activity')
 export class ActivityController {
@@ -15,13 +17,17 @@ export class ActivityController {
 	findAll() {
 		return this.activityService.findAll();
 	}
-
+	@Get('fechas')
+	async findAllFechas() {
+		console.log('Endpoint fechas called'); // Para verificar que se llama
+		return await this.activityService.findAllFechas();
+	}
 	@Get(':id')
 	findOne(@Param('id') id: string) {
 		return this.activityService.findOne(+id);
 	}
 
-	@Patch(':id')
+	@Put(':id')
 	update(@Param('id') id: string, @Body() updateActivityDto: UpdateActivityDto) {
 		return this.activityService.update(+id, updateActivityDto);
 	}
@@ -29,5 +35,24 @@ export class ActivityController {
 	@Delete(':id')
 	remove(@Param('id') id: string) {
 		return this.activityService.remove(+id);
+	}
+	@Post('update-file')
+	@UseInterceptors(
+		FileInterceptor('file', {
+			storage: diskStorage({
+				destination: './uploads/TareaByFecha',
+				filename: (req, file, cb) => {
+					cb(null, file.originalname);
+				},
+			}),
+		}),
+	)
+	async uploadFile(@UploadedFile() file: Express.Multer.File, @Body() body: any) {
+		console.log('Archivo guardado como:', file.filename);
+
+		return {
+			message: 'Archivo subido correctamente',
+			filename: file.filename,
+		};
 	}
 }

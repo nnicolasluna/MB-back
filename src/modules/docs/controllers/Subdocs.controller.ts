@@ -36,10 +36,8 @@ export class SubDocsController {
 	@UseInterceptors(
 		FileInterceptor('file', {
 			storage: diskStorage({
-				destination: './uploads', // o cualquier ruta que uses
+				destination: './uploads/Subcategorias',
 				filename: (req, file, cb) => {
-					// 👇 Aquí está el truco
-					console.log('>> Nombre recibido desde el frontend:', req.body.customName);
 					cb(null, file.originalname);
 				},
 			}),

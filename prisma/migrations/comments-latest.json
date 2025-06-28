@@ -291,6 +291,54 @@
       }
     ]
   },
+  "documentosGrupo": {
+    "table": {
+      "tableName": "documentosGrupo",
+      "comment": ""
+    },
+    "columns": [
+      {
+        "tableName": "documentosGrupo",
+        "columnName": "id",
+        "comment": ""
+      },
+      {
+        "tableName": "documentosGrupo",
+        "columnName": "nombre",
+        "comment": ""
+      },
+      {
+        "tableName": "documentosGrupo",
+        "columnName": "descripcion",
+        "comment": ""
+      },
+      {
+        "tableName": "documentosGrupo",
+        "columnName": "nombreArchivo",
+        "comment": ""
+      },
+      {
+        "tableName": "documentosGrupo",
+        "columnName": "grupoId",
+        "comment": ""
+      },
+      {
+        "tableName": "documentosGrupo",
+        "columnName": "fecha_crea",
+        "comment": ""
+      },
+      {
+        "tableName": "documentosGrupo",
+        "columnName": "fecha_modifica",
+        "comment": ""
+      },
+      {
+        "tableName": "documentosGrupo",
+        "columnName": "fecha_elimina",
+        "comment": ""
+      }
+    ]
+  },
   "archivos": {
     "table": {
       "tableName": "archivos",
