@@ -3,7 +3,7 @@ import { SimplePrismaService } from '@shared/db/prisma.simple';
 
 @Injectable()
 export class ActivityService {
-	constructor(private db: SimplePrismaService) {}
+	constructor(private db: SimplePrismaService) { }
 
 	async create(data: any) {
 		const actividad = await this.db.actividad.create({
@@ -11,7 +11,7 @@ export class ActivityService {
 				nombre: data.actividad.actividad,
 				tipo: data.actividad.TipoActividad.name,
 				grupo: {
-					connect: { id: data.actividad.grupo.id },
+					connect: { id: data.actividad.grupo },
 				},
 			},
 		});
@@ -60,6 +60,14 @@ export class ActivityService {
 			where: {
 				grupoId: id,
 			},
+			include: {
+				grupo: true,
+				Tarea: {
+					include: {
+						FechaProgramada: true,
+					},
+				},
+			},
 		});
 
 		return {
@@ -78,7 +86,9 @@ export class ActivityService {
 	}
 
 	remove(id: number) {
-		return `This action removes a #${id} activity`;
+		return this.db.actividad.delete({
+			where: { id },
+		});
 	}
 	async findAllFechas() {
 		const data = await this.db.fechaProgramada.findMany({
