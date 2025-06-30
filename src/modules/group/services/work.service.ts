@@ -10,7 +10,9 @@ export class WorkService {
 			data: {
 				nombreReunion: createDto.nombreReunion,
 				fechaReunion: createDto.fechaReunion,
+				modalidad: createDto.modalidad,
 				fechaSegundaReunion: createDto.fechaSegundaReunion,
+				link: createDto.link,
 				grupoId: createDto.grupoId,
 			},
 		});
@@ -32,12 +34,16 @@ export class WorkService {
 			},
 		});
 	}
-	findByGrupoId(grupoId: number) {
-		return this.db.reuniones.findMany({
+	async findByGrupoId(grupoId: number) {
+		const work = await this.db.reuniones.findMany({
 			where: {
 				grupoId: grupoId,
 			},
 		});
+		return {
+			items: work,
+			total: work.length,
+		};
 	}
 	update(id: number, updateDto: any) {
 		return this.db.reuniones.update({

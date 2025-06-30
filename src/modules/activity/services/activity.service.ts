@@ -55,8 +55,17 @@ export class ActivityService {
 		};
 	}
 
-	findOne(id: number) {
-		return `This action returns a #${id} activity`;
+	async findOne(id: number) {
+		const data = await this.db.actividad.findMany({
+			where: {
+				grupoId: id,
+			},
+		});
+
+		return {
+			items: data,
+			total: data.length,
+		};
 	}
 
 	update(id: number, updateDto: any) {

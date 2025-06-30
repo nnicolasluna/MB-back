@@ -14,6 +14,7 @@ export class GroupService {
 				nombre: createGroupDto.nombre,
 				periodo_inicio: new Date(periodo_inicio),
 				periodo_fin: new Date(periodo_fin),
+				mesabosques:createGroupDto.mesabosques
 			},
 		});
 

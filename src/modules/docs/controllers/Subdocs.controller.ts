@@ -1,8 +1,11 @@
-import { Controller, Get, Post, Body, Param, Delete, Put, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put, UseInterceptors, UploadedFile, Res } from '@nestjs/common';
 import { SubDocsService } from '../services/Subdocs.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
-
+import { Response } from 'express';
+import * as path from 'path';
+import * as fs from 'fs';
+import { SetMetadata } from '@nestjs/common';
 @Controller('subdocs')
 export class SubDocsController {
 	constructor(private readonly service: SubDocsService) {}
@@ -50,5 +53,23 @@ export class SubDocsController {
 			message: 'Archivo subido correctamente',
 			filename: file.filename,
 		};
+	}
+	@Get('download/:filename')
+	@SetMetadata('isPublic', true)
+	async downloadFile(@Param('filename') filename: string, @Res() res: Response) {
+		const filePath = path.join('./uploads/Subcategorias', filename);
+
+		// Verificar si el archivo existe
+		if (!fs.existsSync(filePath)) {
+			return res.status(404).json({ message: 'Archivo no encontrado' });
+		}
+
+		// Servir el archivo para descarga
+		res.download(filePath, filename, (err) => {
+			if (err) {
+				console.error('Error al descargar archivo:', err);
+				res.status(500).json({ message: 'Error al descargar el archivo' });
+			}
+		});
 	}
 }

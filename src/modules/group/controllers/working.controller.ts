@@ -1,9 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Controller, Patch, Get, Post, Body, Param, Delete, UseInterceptors, UploadedFile, Res } from '@nestjs/common';
 import { UpdateGroupDto } from '../dto/update-group.dto';
 import { WorkingService } from '../services/working.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
-
+import { Response } from 'express';
+import * as path from 'path';
+import * as fs from 'fs';
+import { SetMetadata } from '@nestjs/common';
 @Controller('working-docs')
 export class WorkingController {
 	constructor(private readonly Service: WorkingService) {}
@@ -48,5 +51,21 @@ export class WorkingController {
 			message: 'Archivo subido correctamente',
 			filename: file.filename,
 		};
+	}
+	@Get('download/:filename')
+	@SetMetadata('isPublic', true)
+	async downloadFile(@Param('filename') filename: string, @Res() res: Response) {
+		const filePath = path.join('./uploads/documentosGrupos', filename);
+
+		if (!fs.existsSync(filePath)) {
+			return res.status(404).json({ message: 'Archivo no encontrado' });
+		}
+
+		res.download(filePath, filename, (err) => {
+			if (err) {
+				console.error('Error al descargar archivo:', err);
+				res.status(500).json({ message: 'Error al descargar el archivo' });
+			}
+		});
 	}
 }

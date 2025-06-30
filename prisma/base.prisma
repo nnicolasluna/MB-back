@@ -22,7 +22,8 @@ model Acta {
 model Actividad {
   id      Int     @id @default(autoincrement())
   nombre  String  @db.VarChar(255)
-  tipo    String  @db.VarChar(255)
+  tipo    String?  @db.VarChar(255)
+  acta    String?
   grupoId Int
   grupo   grupo   @relation(fields: [grupoId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_actividad_grupo")
   Tarea   Tarea[]
@@ -44,6 +45,8 @@ model Reuniones {
   nombreReunion       String    @db.VarChar(255)
   fechaReunion        DateTime  @db.Timestamp(6)
   fechaSegundaReunion DateTime? @db.Timestamp(6)
+  modalidad           String?
+  link                String?
   grupoId             Int
   Acta                Acta[]
   grupo               grupo     @relation(fields: [grupoId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_reuniones_grupo")
@@ -80,6 +83,7 @@ model grupo {
   nombre          String            @db.VarChar(200)
   periodo_inicio  DateTime?         @db.Date
   periodo_fin     DateTime?         @db.Date
+  mesabosques     Boolean  @default(false)
   fecha_crea      DateTime?         @default(now())
   fecha_modifica  DateTime?
   fecha_elimina   DateTime?

@@ -13,7 +13,7 @@ export const ResourceTypes = Object.freeze({
 	SYSTEM_PERMISSIONS: 'SYSTEM_PERMISSIONS',
 	LOG_ACTIVITIES: 'LOG_ACTIVITIES',
 	MENU_PROCEEDINGS: 'MENU_PROCEEDINGS',
-
+	SESSIONS: 'SESSIONS',
 	// MENU_CONVOCATIONS: 'MENU_CONVOCATIONS', // Reuniones y Convocatorias
 	// SESSIONS: 'SESSIONS', // Administración de Sesiones
 	// SCHEDULE: 'SCHEDULE', // Administración de Agenda
@@ -100,6 +100,11 @@ export const Resources = Object.freeze([
 	{
 		name: 'Reuniones y Sesiones por Grupo',
 		code: ResourceTypes.GROUPMEET,
+		type: 'MODULE',
+	},
+	{
+		name: 'Administración de Agenda',
+		code: ResourceTypes.SESSIONS,
 		type: 'MODULE',
 	},
 ]);
