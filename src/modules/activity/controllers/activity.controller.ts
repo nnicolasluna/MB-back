@@ -9,7 +9,7 @@ import * as fs from 'fs';
 import { SetMetadata } from '@nestjs/common';
 @Controller('activity')
 export class ActivityController {
-	constructor(private readonly activityService: ActivityService) { }
+	constructor(private readonly activityService: ActivityService) {}
 
 	@Post()
 	create(@Body() createActivityDto: any) {
@@ -101,5 +101,23 @@ export class ActivityController {
 			message: 'Archivo subido correctamente',
 			filename: file.filename,
 		};
+	}
+	@Get('download-list/:filename')
+	@SetMetadata('isPublic', true)
+	async downloadFileList(@Param('filename') filename: string, @Res() res: Response) {
+		const filePath = path.join('./uploads/TareaByFecha', filename);
+
+		// Verificar si el archivo existe
+		if (!fs.existsSync(filePath)) {
+			return res.status(404).json({ message: 'Archivo no encontrado' });
+		}
+
+		// Servir el archivo para descarga
+		res.download(filePath, filename, (err) => {
+			if (err) {
+				console.error('Error al descargar archivo:', err);
+				res.status(500).json({ message: 'Error al descargar el archivo' });
+			}
+		});
 	}
 }
