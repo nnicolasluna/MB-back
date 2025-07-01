@@ -9,7 +9,7 @@ import * as fs from 'fs';
 import { SetMetadata } from '@nestjs/common';
 @Controller('activity')
 export class ActivityController {
-	constructor(private readonly activityService: ActivityService) {}
+	constructor(private readonly activityService: ActivityService) { }
 
 	@Post()
 	create(@Body() createActivityDto: any) {
@@ -34,7 +34,14 @@ export class ActivityController {
 	update(@Param('id') id: string, @Body() updateActivityDto: UpdateActivityDto) {
 		return this.activityService.update(+id, updateActivityDto);
 	}
-
+	@Put('acta/:id')
+	updateacta(@Param('id') id: string, @Body() updateActivityDto: UpdateActivityDto) {
+		return this.activityService.updateacta(+id, updateActivityDto);
+	}
+	@Put('list/:id')
+	updatelist(@Param('id') id: string, @Body() updateActivityDto: UpdateActivityDto) {
+		return this.activityService.updatelista(+id, updateActivityDto);
+	}
 	@Delete(':id')
 	remove(@Param('id') id: string) {
 		return this.activityService.remove(+id);
@@ -75,5 +82,24 @@ export class ActivityController {
 				res.status(500).json({ message: 'Error al descargar el archivo' });
 			}
 		});
+	}
+	@Post('update-file-list')
+	@UseInterceptors(
+		FileInterceptor('file', {
+			storage: diskStorage({
+				destination: './uploads/TareaByFecha',
+				filename: (req, file, cb) => {
+					cb(null, file.originalname);
+				},
+			}),
+		}),
+	)
+	async uploadFileList(@UploadedFile() file: Express.Multer.File, @Body() body: any) {
+		console.log('Archivo guardado como:', file.filename);
+
+		return {
+			message: 'Archivo subido correctamente',
+			filename: file.filename,
+		};
 	}
 }

@@ -9,7 +9,7 @@ export class ActivityService {
 		const actividad = await this.db.actividad.create({
 			data: {
 				nombre: data.actividad.actividad,
-				tipo: data.actividad.TipoActividad.name,
+				tipo: data.actividad.TipoActividad?.name ?? null,
 				grupo: {
 					connect: { id: data.actividad.grupo },
 				},
@@ -38,6 +38,84 @@ export class ActivityService {
 
 		return { message: 'Actividad y tareas creadas correctamente' };
 	}
+	async update(id: number, data: any) {
+		// Actualizamos la actividad
+		const actividad = await this.db.actividad.update({
+			where: { id },
+			data: {
+				nombre: data.actividad.actividad,
+				tipo: data.actividad.TipoActividad?.name ?? null,
+				grupo: {
+					connect: { id: data.actividad.grupo },
+				},
+			},
+		});
+
+		// Obtener tareas actuales en la base de datos
+		const tareasExistentes = await this.db.tarea.findMany({
+			where: { actividadId: id },
+			select: { id: true },
+		});
+
+		const idsTareasEnviadas = (data.tareas ?? []).filter(t => t.id).map(t => t.id);
+
+		// Eliminar tareas que ya no están
+		const tareasAEliminar = tareasExistentes.filter(
+			t => !idsTareasEnviadas.includes(t.id)
+		);
+
+		for (const tarea of tareasAEliminar) {
+			await this.db.fechaProgramada.deleteMany({ where: { tareaId: tarea.id } });
+			await this.db.tarea.delete({ where: { id: tarea.id } });
+		}
+
+		// Procesar tareas nuevas y actualizadas
+		for (const tarea of data.tareas ?? []) {
+			let tareaActualizada;
+
+			if (tarea.id) {
+				// Actualizar tarea existente
+				tareaActualizada = await this.db.tarea.update({
+					where: { id: tarea.id },
+					data: {
+						nombre: tarea.tarea,
+						resultado: tarea.resultado,
+						responsableId: tarea.responsable.id,
+					},
+				});
+
+				// Eliminar fechas anteriores
+				await this.db.fechaProgramada.deleteMany({
+					where: { tareaId: tarea.id },
+				});
+			} else {
+				// Crear nueva tarea
+				tareaActualizada = await this.db.tarea.create({
+					data: {
+						nombre: tarea.tarea,
+						resultado: tarea.resultado,
+						responsableId: tarea.responsable.id,
+						actividadId: actividad.id,
+					},
+				});
+			}
+
+			// Agregar nuevas fechas
+			for (const fecha of tarea.fechas ?? []) {
+				if (fecha) {
+					await this.db.fechaProgramada.create({
+						data: {
+							fechaHora: new Date(fecha),
+							tareaId: tareaActualizada.id,
+						},
+					});
+				}
+			}
+		}
+
+		return { message: 'Actividad y tareas actualizadas correctamente' };
+	}
+
 	async findAll() {
 		const data = await this.db.actividad.findMany({
 			include: {
@@ -61,10 +139,31 @@ export class ActivityService {
 				grupoId: id,
 			},
 			include: {
-				grupo: true,
+				grupo: {
+					include: {
+						TareaUsuario: {
+							include: {
+								usuario: {
+									select: {
+										name: true,
+										firstSurname: true,
+										secondSurname: true,
+									},
+								},
+							},
+						},
+					},
+				},
 				Tarea: {
 					include: {
 						FechaProgramada: true,
+						usuario: {
+							select: {
+								name: true,
+								firstSurname: true,
+								secondSurname: true,
+							},
+						},
 					},
 				},
 			},
@@ -76,7 +175,7 @@ export class ActivityService {
 		};
 	}
 
-	update(id: number, updateDto: any) {
+	updateacta(id: number, updateDto: any) {
 		return this.db.tarea.update({
 			where: { id },
 			data: {
@@ -84,7 +183,14 @@ export class ActivityService {
 			},
 		});
 	}
-
+	updatelista(id: number, updateDto: any) {
+		return this.db.tarea.update({
+			where: { id },
+			data: {
+				listParty: updateDto.acta,
+			},
+		});
+	}
 	remove(id: number) {
 		return this.db.actividad.delete({
 			where: { id },
