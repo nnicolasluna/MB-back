@@ -7,11 +7,13 @@ import { Response } from 'express';
 import * as path from 'path';
 import * as fs from 'fs';
 import { SetMetadata } from '@nestjs/common';
+import { TrackActivity } from '@shared/decorators';
 @Controller('working-docs')
 export class WorkingController {
-	constructor(private readonly Service: WorkingService) {}
+	constructor(private readonly Service: WorkingService) { }
 
 	@Post()
+	@TrackActivity('Log [Creó una Documento por Grupo]')
 	create(@Body() createGroupDto: any) {
 		return this.Service.create(createGroupDto);
 	}
@@ -27,15 +29,18 @@ export class WorkingController {
 	}
 
 	@Patch(':id')
+	@TrackActivity('Log [Actualizo documento por grupo]')
 	update(@Param('id') id: string, @Body() updateGroupDto: UpdateGroupDto) {
 		return this.Service.update(+id, updateGroupDto);
 	}
 
 	@Delete(':id')
+	@TrackActivity('Log [Borro Documento por grupo]')
 	remove(@Param('id') id: string) {
 		return this.Service.remove(+id);
 	}
 	@Post('update-file')
+	@TrackActivity('Log [Subio Documento por grupo]')
 	@UseInterceptors(
 		FileInterceptor('file', {
 			storage: diskStorage({
@@ -53,6 +58,7 @@ export class WorkingController {
 		};
 	}
 	@Get('download/:filename')
+	@TrackActivity('Log [Descargo Documento por grupo]')
 	@SetMetadata('isPublic', true)
 	async downloadFile(@Param('filename') filename: string, @Res() res: Response) {
 		const filePath = path.join('./uploads/documentosGrupos', filename);

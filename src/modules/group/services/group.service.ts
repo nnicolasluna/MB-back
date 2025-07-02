@@ -3,7 +3,7 @@ import { SimplePrismaService } from '@shared/db/prisma.simple';
 
 @Injectable()
 export class GroupService {
-	constructor(private db: SimplePrismaService) {}
+	constructor(private db: SimplePrismaService) { }
 
 	async create(createGroupDto: any) {
 		console.log(createGroupDto);
@@ -14,7 +14,7 @@ export class GroupService {
 				nombre: createGroupDto.nombre,
 				periodo_inicio: new Date(periodo_inicio),
 				periodo_fin: new Date(periodo_fin),
-				mesabosques:createGroupDto.mesabosques
+				mesabosques: createGroupDto.mesabosques,
 			},
 		});
 
@@ -39,7 +39,13 @@ export class GroupService {
 			include: {
 				TareaUsuario: {
 					include: {
-						usuario: true,
+						usuario: {
+							select: {
+								name: true,
+								firstSurname: true,
+								secondSurname: true,
+							},
+						},
 					},
 				},
 			},

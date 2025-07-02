@@ -6,11 +6,13 @@ import { Response } from 'express';
 import * as path from 'path';
 import * as fs from 'fs';
 import { SetMetadata } from '@nestjs/common';
+import { TrackActivity } from '@shared/decorators';
 @Controller('subdocs')
 export class SubDocsController {
-	constructor(private readonly service: SubDocsService) {}
+	constructor(private readonly service: SubDocsService) { }
 
 	@Post()
+	@TrackActivity('Log [Creó Sub Documento]')
 	create(@Body() createDocDto: any) {
 		return this.service.create(createDocDto);
 	}
@@ -26,16 +28,19 @@ export class SubDocsController {
 	}
 
 	@Put(':id')
+	@TrackActivity('Log [Actualizo Sub Documento]')
 	update(@Param('id') id: string, @Body() updateDocDto: any) {
 		return this.service.update(+id, updateDocDto);
 	}
 
 	@Delete(':id')
+	@TrackActivity('Log [Borro Sub Documento]')
 	remove(@Param('id') id: string) {
 		return this.service.remove(+id);
 	}
 
 	@Post('update-file')
+	@TrackActivity('Log [Subio Documento]')
 	@UseInterceptors(
 		FileInterceptor('file', {
 			storage: diskStorage({
@@ -55,16 +60,15 @@ export class SubDocsController {
 		};
 	}
 	@Get('download/:filename')
+	@TrackActivity('Log [Descargo Documento]')
 	@SetMetadata('isPublic', true)
 	async downloadFile(@Param('filename') filename: string, @Res() res: Response) {
 		const filePath = path.join('./uploads/Subcategorias', filename);
 
-		// Verificar si el archivo existe
 		if (!fs.existsSync(filePath)) {
 			return res.status(404).json({ message: 'Archivo no encontrado' });
 		}
 
-		// Servir el archivo para descarga
 		res.download(filePath, filename, (err) => {
 			if (err) {
 				console.error('Error al descargar archivo:', err);

@@ -7,10 +7,11 @@ import { Response } from 'express';
 import * as path from 'path';
 import * as fs from 'fs';
 import { SetMetadata } from '@nestjs/common';
+import { TrackActivity } from '@shared/decorators';
 @Controller('activity')
 export class ActivityController {
-	constructor(private readonly activityService: ActivityService) {}
-
+	constructor(private readonly activityService: ActivityService) { }
+	@TrackActivity('Log [Creó una Actividad]')
 	@Post()
 	create(@Body() createActivityDto: any) {
 		return this.activityService.create(createActivityDto);
@@ -29,7 +30,7 @@ export class ActivityController {
 	findOne(@Param('id') id: string) {
 		return this.activityService.findOne(+id);
 	}
-
+	@TrackActivity('Log [Actualizo Actividad]')
 	@Put(':id')
 	update(@Param('id') id: string, @Body() updateActivityDto: UpdateActivityDto) {
 		return this.activityService.update(+id, updateActivityDto);
@@ -42,11 +43,13 @@ export class ActivityController {
 	updatelist(@Param('id') id: string, @Body() updateActivityDto: UpdateActivityDto) {
 		return this.activityService.updatelista(+id, updateActivityDto);
 	}
+	@TrackActivity('Log [Borro una Actividad]')
 	@Delete(':id')
 	remove(@Param('id') id: string) {
 		return this.activityService.remove(+id);
 	}
 	@Post('update-file')
+	@TrackActivity('Log [Subio Acta]')
 	@UseInterceptors(
 		FileInterceptor('file', {
 			storage: diskStorage({
@@ -66,16 +69,13 @@ export class ActivityController {
 		};
 	}
 	@Get('download/:filename')
+	@TrackActivity('Log [Descargo Acta]')
 	@SetMetadata('isPublic', true)
 	async downloadFile(@Param('filename') filename: string, @Res() res: Response) {
 		const filePath = path.join('./uploads/TareaByFecha', filename);
-
-		// Verificar si el archivo existe
 		if (!fs.existsSync(filePath)) {
 			return res.status(404).json({ message: 'Archivo no encontrado' });
 		}
-
-		// Servir el archivo para descarga
 		res.download(filePath, filename, (err) => {
 			if (err) {
 				console.error('Error al descargar archivo:', err);
@@ -84,6 +84,7 @@ export class ActivityController {
 		});
 	}
 	@Post('update-file-list')
+	@TrackActivity('Log [Subio Lista de participante]')
 	@UseInterceptors(
 		FileInterceptor('file', {
 			storage: diskStorage({
@@ -103,6 +104,7 @@ export class ActivityController {
 		};
 	}
 	@Get('download-list/:filename')
+	@TrackActivity('Log [Descargo lista de participantes]')
 	@SetMetadata('isPublic', true)
 	async downloadFileList(@Param('filename') filename: string, @Res() res: Response) {
 		const filePath = path.join('./uploads/TareaByFecha', filename);

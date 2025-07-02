@@ -197,15 +197,12 @@ export class ActivityService {
 		});
 	}
 	async findAllFechas() {
-		const data = await this.db.fechaProgramada.findMany({
+		const data = await this.db.tarea.findMany({
 			include: {
-				Tarea: {
+				FechaProgramada: true,
+				Actividad: {
 					include: {
-						Actividad: {
-							include: {
-								grupo: true,
-							},
-						},
+						grupo: true,
 					},
 				},
 			},
