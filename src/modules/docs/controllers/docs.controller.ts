@@ -4,7 +4,7 @@ import { TrackActivity } from '@shared/decorators';
 
 @Controller('docs')
 export class DocsController {
-	constructor(private readonly docsService: DocsService) { }
+	constructor(private readonly docsService: DocsService) {}
 
 	@Post()
 	@TrackActivity('Log [Creó una Documento]')

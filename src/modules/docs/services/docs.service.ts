@@ -16,7 +16,11 @@ export class DocsService {
 	}
 
 	async findAll() {
-		const data = await this.db.documentos.findMany();
+		const data = await this.db.documentos.findMany({
+			include: {
+				subdocumentos: true,
+			},
+		});
 
 		return {
 			items: data,

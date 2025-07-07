@@ -6,10 +6,10 @@ import { Response } from 'express';
 import * as path from 'path';
 import * as fs from 'fs';
 import { SetMetadata } from '@nestjs/common';
-import { TrackActivity } from '@shared/decorators';
+import { IsPublic, TrackActivity } from '@shared/decorators';
 @Controller('subdocs')
 export class SubDocsController {
-	constructor(private readonly service: SubDocsService) { }
+	constructor(private readonly service: SubDocsService) {}
 
 	@Post()
 	@TrackActivity('Log [Creó Sub Documento]')
@@ -18,6 +18,7 @@ export class SubDocsController {
 	}
 
 	@Get()
+	@IsPublic()
 	findAll() {
 		return this.service.findAll();
 	}
@@ -63,6 +64,22 @@ export class SubDocsController {
 	@TrackActivity('Log [Descargo Documento]')
 	@SetMetadata('isPublic', true)
 	async downloadFile(@Param('filename') filename: string, @Res() res: Response) {
+		const filePath = path.join('./uploads/Subcategorias', filename);
+
+		if (!fs.existsSync(filePath)) {
+			return res.status(404).json({ message: 'Archivo no encontrado' });
+		}
+
+		res.download(filePath, filename, (err) => {
+			if (err) {
+				console.error('Error al descargar archivo:', err);
+				res.status(500).json({ message: 'Error al descargar el archivo' });
+			}
+		});
+	}
+	@Get('download-externo/:filename')
+	@IsPublic()
+	async downloadFileexterno(@Param('filename') filename: string, @Res() res: Response) {
 		const filePath = path.join('./uploads/Subcategorias', filename);
 
 		if (!fs.existsSync(filePath)) {

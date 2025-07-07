@@ -44,9 +44,9 @@ export class ActivityTrackerInterceptor implements NestInterceptor {
 		return request.logDescription;
 	}
 
-	private getCurrentUserFromContext(context: ExecutionContext): User {
+	private getCurrentUserFromContext(context: ExecutionContext): User | null {
 		const request = context.switchToHttp().getRequest();
-		return request.user.user;
+		return request.user?.user ?? null;
 	}
 
 	private getRequestProps(context: ExecutionContext) {

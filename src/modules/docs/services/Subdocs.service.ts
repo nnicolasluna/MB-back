@@ -21,8 +21,11 @@ export class SubDocsService {
 	}
 
 	async findAll() {
-		console.log('hola mundo');
-		const data = await this.db.subdocumentos.findMany();
+		const data = await this.db.subdocumentos.findMany({
+			include: {
+				documentos: true,
+			},
+		});
 
 		return {
 			items: data,
@@ -30,10 +33,14 @@ export class SubDocsService {
 		};
 	}
 
-	findOne(id: number) {
-		return this.db.subdocumentos.findUnique({
-			where: { id },
+	async findOne(id: number) {
+		const data = await this.db.subdocumentos.findMany({
+			where: { documentosId: id },
 		});
+		return {
+			items: data,
+			total: data.length,
+		};
 	}
 
 	update(id: number, data: any) {

@@ -49,6 +49,11 @@ export class GroupService {
 						},
 					},
 				},
+				Actividad: {
+					include: {
+						Tarea: true,
+					},
+				},
 			},
 		});
 
