@@ -6,6 +6,7 @@ export const ResourceTypes = Object.freeze({
 	MENU_GROUP: 'MENU_GROUP',
 	AGENDA: 'AGENDA',
 	GROUP: 'GROUP',
+	WORKING: 'WORKING',
 	OFFICIAL: 'OFFICIAL',
 	EVENTS: 'EVENTS',
 	GROUPMEET: 'GROUPMEET',
@@ -105,6 +106,11 @@ export const Resources = Object.freeze([
 	{
 		name: 'Administración de Agenda',
 		code: ResourceTypes.SESSIONS,
+		type: 'MODULE',
+	},
+	{
+		name: 'Documentos por Grupo de Trabajo',
+		code: ResourceTypes.WORKING,
 		type: 'MODULE',
 	},
 ]);

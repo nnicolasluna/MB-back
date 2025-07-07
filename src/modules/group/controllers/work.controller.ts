@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common';
 import { UpdateGroupDto } from '../dto/update-group.dto';
 import { WorkService } from '../services/work.service';
 import { TrackActivity } from '@shared/decorators';
@@ -23,7 +23,7 @@ export class WorkController {
 		return this.service.findByGrupoId(+id);
 	}
 	@TrackActivity('Log [Actualizo Reunion]')
-	@Patch(':id')
+	@Put(':id')
 	update(@Param('id') id: string, @Body() updateGroupDto: UpdateGroupDto) {
 		return this.service.update(+id, updateGroupDto);
 	}

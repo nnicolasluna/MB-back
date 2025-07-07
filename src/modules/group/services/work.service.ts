@@ -3,7 +3,7 @@ import { SimplePrismaService } from '@shared/db/prisma.simple';
 
 @Injectable()
 export class WorkService {
-	constructor(private db: SimplePrismaService) {}
+	constructor(private db: SimplePrismaService) { }
 
 	create(createDto: any) {
 		return this.db.reuniones.create({
@@ -13,6 +13,7 @@ export class WorkService {
 				modalidad: createDto.modalidad,
 				fechaSegundaReunion: createDto.fechaSegundaReunion,
 				link: createDto.link,
+				direccion: createDto.direccion,
 				grupoId: createDto.grupoId,
 			},
 		});
