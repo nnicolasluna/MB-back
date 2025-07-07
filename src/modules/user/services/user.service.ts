@@ -28,7 +28,7 @@ export class UserService {
 		private readonly emailService: EmailService,
 		private readonly authService: AuthService,
 		private readonly configService: ConfigService,
-	) {}
+	) { }
 
 	async findAll(filter: UsersFilter) {
 		this.logger.log(`Finding all users, with filter: ${filter}`);
@@ -167,7 +167,7 @@ export class UserService {
 
 			switch (status) {
 				case UserStatus.APROVE:
-					/* isAproved = true; */
+					isAproved = true;
 					const verification = await this.aprove(id);
 					data = {
 						...data,
@@ -189,7 +189,7 @@ export class UserService {
 				include: { role: true, image: true },
 			});
 
-			/* if (isAproved) await this.emailService.sendVerificationEmail(updateUser); */
+			if (isAproved) await this.emailService.sendVerificationEmail(updateUser);
 
 			return new UserResponse(updateUser);
 		} catch (error) {
