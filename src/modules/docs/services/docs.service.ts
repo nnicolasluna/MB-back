@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { SimplePrismaService } from '@shared/db/prisma.simple';
+import { DocsFilter } from '../dto/docs.filter';
 
 @Injectable()
 export class DocsService {
-	constructor(private db: SimplePrismaService) {}
+	constructor(private db: SimplePrismaService) { }
 	async create(createDocDto: any) {
 		const { titulo, visualizacion } = createDocDto;
 
@@ -15,16 +16,20 @@ export class DocsService {
 		});
 	}
 
-	async findAll() {
-		const data = await this.db.documentos.findMany({
-			include: {
-				subdocumentos: true,
-			},
-		});
-
+	async findAll(filter: DocsFilter) {
+		const { where, pagination } = filter;
+		const [items, total] = await this.db.$transaction([
+			this.db.documentos.findMany({
+				include: {
+					subdocumentos: true,
+				},
+				...pagination,
+			}),
+			this.db.documentos.count({ where }),
+		]);
 		return {
-			items: data,
-			total: data.length,
+			items: items,
+			total: total,
 		};
 	}
 

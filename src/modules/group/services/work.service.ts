@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { SimplePrismaService } from '@shared/db/prisma.simple';
+import { WorksFilter } from '../dto/Works.filter';
 
 @Injectable()
 export class WorkService {
@@ -35,8 +36,8 @@ export class WorkService {
 			},
 		});
 	}
-	async findByGrupoId(grupoId: number) {
-		const work = await this.db.reuniones.findMany({
+	async findByGrupoId(grupoId: number, filter: WorksFilter) {
+		/* const work = await this.db.reuniones.findMany({
 			where: {
 				grupoId: grupoId,
 			},
@@ -44,6 +45,18 @@ export class WorkService {
 		return {
 			items: work,
 			total: work.length,
+		}; */
+		const { pagination } = filter;
+		const [items, total] = await this.db.$transaction([
+			this.db.reuniones.findMany({
+				where: { grupoId: grupoId },
+				...pagination,
+			}),
+			this.db.reuniones.count({ where: { grupoId: grupoId } }),
+		]);
+		return {
+			items: items,
+			total: total,
 		};
 	}
 	update(id: number, updateDto: any) {
@@ -52,8 +65,11 @@ export class WorkService {
 			data: {
 				nombreReunion: updateDto.nombreReunion,
 				fechaReunion: updateDto.fechaReunion ? new Date(updateDto.fechaReunion) : undefined,
+				modalidad: updateDto.modalidad,
 				fechaSegundaReunion: updateDto.fechaSegundaReunion ? new Date(updateDto.fechaSegundaReunion) : undefined,
-				grupoId: updateDto.grupoid,
+				link: updateDto.link,
+				direccion: updateDto.direccion,
+				grupoId: updateDto.grupoId,
 			},
 		});
 	}

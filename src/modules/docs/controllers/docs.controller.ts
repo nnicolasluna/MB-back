@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put, Query } from '@nestjs/common';
 import { DocsService } from '../services/docs.service';
 import { TrackActivity } from '@shared/decorators';
+import { DocsFilter } from '../dto/docs.filter';
 
 @Controller('docs')
 export class DocsController {
-	constructor(private readonly docsService: DocsService) {}
+	constructor(private readonly docsService: DocsService) { }
 
 	@Post()
 	@TrackActivity('Log [Creó una Documento]')
@@ -13,8 +14,8 @@ export class DocsController {
 	}
 
 	@Get()
-	findAll() {
-		return this.docsService.findAll();
+	findAll(@Query() filter: DocsFilter) {
+		return this.docsService.findAll(filter);
 	}
 
 	@Get(':id')

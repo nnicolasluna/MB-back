@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { SimplePrismaService } from '@shared/db/prisma.simple';
+import { SubDocsFilter } from '../dto/Subdocs.filter';
 
 @Injectable()
 export class SubDocsService {
-	constructor(private db: SimplePrismaService) {}
+	constructor(private db: SimplePrismaService) { }
 	async create(createDocDto: any) {
 		const { tituloSub, nombreArchivo, documentosId } = createDocDto;
 
@@ -20,26 +21,42 @@ export class SubDocsService {
 		});
 	}
 
-	async findAll() {
-		const data = await this.db.subdocumentos.findMany({
-			include: {
-				documentos: true,
-			},
-		});
-
+	async findAll(filter: SubDocsFilter) {
+		const { where, pagination } = filter;
+		const [items, total] = await this.db.$transaction([
+			this.db.subdocumentos.findMany({
+				include: {
+					documentos: true,
+				},
+				...pagination,
+			}),
+			this.db.subdocumentos.count({ where }),
+		]);
 		return {
-			items: data,
-			total: data.length,
+			items: items,
+			total: total,
 		};
 	}
 
-	async findOne(id: number) {
-		const data = await this.db.subdocumentos.findMany({
+	async findOne(id: number, filter: SubDocsFilter) {
+		/* const data = await this.db.subdocumentos.findMany({
 			where: { documentosId: id },
 		});
 		return {
 			items: data,
 			total: data.length,
+		}; */
+		const { pagination } = filter;
+		const [items, total] = await this.db.$transaction([
+			this.db.subdocumentos.findMany({
+				where: { documentosId: id },
+				...pagination,
+			}),
+			this.db.subdocumentos.count({ where: { documentosId: id } }),
+		]);
+		return {
+			items: items,
+			total: total,
 		};
 	}
 

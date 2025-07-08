@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Delete, Put, UseInterceptors, UploadedFile, Res } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put, UseInterceptors, UploadedFile, Res, Query } from '@nestjs/common';
 import { SubDocsService } from '../services/Subdocs.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
@@ -7,9 +7,10 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { SetMetadata } from '@nestjs/common';
 import { IsPublic, TrackActivity } from '@shared/decorators';
+import { SubDocsFilter } from '../dto/Subdocs.filter';
 @Controller('subdocs')
 export class SubDocsController {
-	constructor(private readonly service: SubDocsService) {}
+	constructor(private readonly service: SubDocsService) { }
 
 	@Post()
 	@TrackActivity('Log [Creó Sub Documento]')
@@ -19,13 +20,13 @@ export class SubDocsController {
 
 	@Get()
 	@IsPublic()
-	findAll() {
-		return this.service.findAll();
+	findAll(@Query() filter: SubDocsFilter) {
+		return this.service.findAll(filter);
 	}
 
 	@Get(':id')
-	findOne(@Param('id') id: string) {
-		return this.service.findOne(+id);
+	findOne(@Param('id') id: string, @Query() filter: SubDocsFilter) {
+		return this.service.findOne(+id, filter);
 	}
 
 	@Put(':id')

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { SimplePrismaService } from '@shared/db/prisma.simple';
+import { ActivityFilter } from '../dto/activity.filter';
 
 @Injectable()
 export class ActivityService {
@@ -133,8 +134,8 @@ export class ActivityService {
 		};
 	}
 
-	async findOne(id: number) {
-		const data = await this.db.actividad.findMany({
+	async findOne(id: number, filter: ActivityFilter) {
+		/* const data = await this.db.actividad.findMany({
 			where: {
 				grupoId: id,
 			},
@@ -172,6 +173,53 @@ export class ActivityService {
 		return {
 			items: data,
 			total: data.length,
+		}; */
+		const { pagination } = filter;
+		const [items, total] = await this.db.$transaction([
+			this.db.actividad.findMany({
+				where: {
+					grupoId: id,
+				},
+				include: {
+					grupo: {
+						include: {
+							TareaUsuario: {
+								include: {
+									usuario: {
+										select: {
+											name: true,
+											firstSurname: true,
+											secondSurname: true,
+										},
+									},
+								},
+							},
+						},
+					},
+					Tarea: {
+						include: {
+							FechaProgramada: true,
+							usuario: {
+								select: {
+									name: true,
+									firstSurname: true,
+									secondSurname: true,
+								},
+							},
+						},
+					},
+				},
+				...pagination,
+			}),
+			this.db.actividad.count({
+				where: {
+					grupoId: id,
+				},
+			}),
+		]);
+		return {
+			items: items,
+			total: total,
 		};
 	}
 
@@ -196,8 +244,8 @@ export class ActivityService {
 			where: { id },
 		});
 	}
-	async findAllFechas() {
-		const data = await this.db.tarea.findMany({
+	async findAllFechas(filter: ActivityFilter) {
+		/* const data = await this.db.tarea.findMany({
 			include: {
 				FechaProgramada: true,
 				Actividad: {
@@ -211,6 +259,26 @@ export class ActivityService {
 		return {
 			items: data,
 			total: data.length,
+		}; */
+		const { where, pagination } = filter;
+
+		const [items, total] = await this.db.$transaction([
+			this.db.tarea.findMany({
+				include: {
+					FechaProgramada: true,
+					Actividad: {
+						include: {
+							grupo: true,
+						},
+					},
+				},
+				...pagination,
+			}),
+			this.db.tarea.count({ where: {} }),
+		]);
+		return {
+			items: items,
+			total: total,
 		};
 	}
 }

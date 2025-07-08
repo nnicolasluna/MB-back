@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Res, Param, Delete, UseInterceptors, UploadedFile, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Res, Param, Delete, UseInterceptors, UploadedFile, Put, Query } from '@nestjs/common';
 import { UpdateActivityDto } from '../dto/update-activity.dto';
 import { ActivityService } from '../services/activity.service';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -8,9 +8,10 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { SetMetadata } from '@nestjs/common';
 import { IsPublic, TrackActivity } from '@shared/decorators';
+import { ActivityFilter } from '../dto/activity.filter';
 @Controller('activity')
 export class ActivityController {
-	constructor(private readonly activityService: ActivityService) {}
+	constructor(private readonly activityService: ActivityService) { }
 	@TrackActivity('Log [Creó una Actividad]')
 	@Post()
 	create(@Body() createActivityDto: any) {
@@ -23,12 +24,12 @@ export class ActivityController {
 	}
 	@Get('fechas')
 	@IsPublic()
-	async findAllFechas() {
-		return await this.activityService.findAllFechas();
+	async findAllFechas(@Query() filter: ActivityFilter) {
+		return await this.activityService.findAllFechas(filter);
 	}
 	@Get(':id')
-	findOne(@Param('id') id: string) {
-		return this.activityService.findOne(+id);
+	findOne(@Param('id') id: string, @Query() filter: ActivityFilter) {
+		return this.activityService.findOne(+id, filter);
 	}
 	@TrackActivity('Log [Actualizo Actividad]')
 	@Put(':id')

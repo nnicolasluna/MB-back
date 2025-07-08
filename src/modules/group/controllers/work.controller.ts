@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete, Query } from '@nestjs/common';
 import { UpdateGroupDto } from '../dto/update-group.dto';
 import { WorkService } from '../services/work.service';
 import { TrackActivity } from '@shared/decorators';
+import { WorksFilter } from '../dto/Works.filter';
 
 @Controller('work')
 export class WorkController {
@@ -19,8 +20,8 @@ export class WorkController {
 	}
 
 	@Get(':id')
-	findOne(@Param('id') id: string) {
-		return this.service.findByGrupoId(+id);
+	findOne(@Param('id') id: string, @Query() filter: WorksFilter) {
+		return this.service.findByGrupoId(+id, filter);
 	}
 	@TrackActivity('Log [Actualizo Reunion]')
 	@Put(':id')
