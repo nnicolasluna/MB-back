@@ -4,7 +4,7 @@ import { ActivityFilter } from '../dto/activity.filter';
 
 @Injectable()
 export class ActivityService {
-	constructor(private db: SimplePrismaService) { }
+	constructor(private db: SimplePrismaService) {}
 
 	async create(data: any) {
 		const actividad = await this.db.actividad.create({
@@ -58,12 +58,10 @@ export class ActivityService {
 			select: { id: true },
 		});
 
-		const idsTareasEnviadas = (data.tareas ?? []).filter(t => t.id).map(t => t.id);
+		const idsTareasEnviadas = (data.tareas ?? []).filter((t) => t.id).map((t) => t.id);
 
 		// Eliminar tareas que ya no están
-		const tareasAEliminar = tareasExistentes.filter(
-			t => !idsTareasEnviadas.includes(t.id)
-		);
+		const tareasAEliminar = tareasExistentes.filter((t) => !idsTareasEnviadas.includes(t.id));
 
 		for (const tarea of tareasAEliminar) {
 			await this.db.fechaProgramada.deleteMany({ where: { tareaId: tarea.id } });
@@ -264,6 +262,9 @@ export class ActivityService {
 
 		const [items, total] = await this.db.$transaction([
 			this.db.tarea.findMany({
+				where: {
+					NOT: [{ acta: null }, { acta: '' }],
+				},
 				include: {
 					FechaProgramada: true,
 					Actividad: {
@@ -274,7 +275,11 @@ export class ActivityService {
 				},
 				...pagination,
 			}),
-			this.db.tarea.count({ where: {} }),
+			this.db.tarea.count({
+				where: {
+					NOT: [{ acta: null }, { acta: '' }],
+				},
+			}),
 		]);
 		return {
 			items: items,

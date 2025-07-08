@@ -1,4 +1,16 @@
-import { Controller, Patch, Get, Post, Body, Param, Delete, UseInterceptors, UploadedFile, Res } from '@nestjs/common';
+import {
+	Controller,
+	Get,
+	Post,
+	Body,
+	Param,
+	Delete,
+	UseInterceptors,
+	UploadedFile,
+	Res,
+	Query,
+	Put,
+} from '@nestjs/common';
 import { UpdateGroupDto } from '../dto/update-group.dto';
 import { WorkingService } from '../services/working.service';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -8,9 +20,10 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { SetMetadata } from '@nestjs/common';
 import { TrackActivity } from '@shared/decorators';
+import { workingFilter } from '../dto/working.filter';
 @Controller('working-docs')
 export class WorkingController {
-	constructor(private readonly Service: WorkingService) { }
+	constructor(private readonly Service: WorkingService) {}
 
 	@Post()
 	@TrackActivity('Log [Creó una Documento por Grupo]')
@@ -24,11 +37,11 @@ export class WorkingController {
 	}
 
 	@Get(':id')
-	findOne(@Param('id') id: string) {
-		return this.Service.findOne(+id);
+	findOne(@Param('id') id: string, @Query() filter: workingFilter) {
+		return this.Service.findOne(+id, filter);
 	}
 
-	@Patch(':id')
+	@Put(':id')
 	@TrackActivity('Log [Actualizo documento por grupo]')
 	update(@Param('id') id: string, @Body() updateGroupDto: UpdateGroupDto) {
 		return this.Service.update(+id, updateGroupDto);
