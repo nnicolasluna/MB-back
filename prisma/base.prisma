@@ -15,7 +15,7 @@ model Acta {
   nombreActa String    @db.VarChar(255)
   reunionId  Int
   Reuniones  Reuniones @relation(fields: [reunionId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_acta_reunion")
-
+  ...auditFields
   @@schema("public")
 }
 
@@ -27,7 +27,7 @@ model Actividad {
   grupoId Int
   grupo   grupo   @relation(fields: [grupoId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_actividad_grupo")
   Tarea   Tarea[]
-
+  ...auditFields
   @@schema("public")
 }
 
@@ -36,7 +36,7 @@ model FechaProgramada {
   fechaHora DateTime @db.Timestamp(6)
   tareaId   Int
   Tarea     Tarea    @relation(fields: [tareaId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_fechaprogramada_tarea")
-
+  ...auditFields
   @@schema("public")
 }
 
@@ -51,7 +51,7 @@ model Reuniones {
   grupoId             Int
   Acta                Acta[]
   grupo               grupo     @relation(fields: [grupoId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_reuniones_grupo")
-
+  ...auditFields
   @@schema("public")
 }
 
@@ -66,7 +66,7 @@ model Tarea {
   FechaProgramada FechaProgramada[]
   Actividad       Actividad         @relation(fields: [actividadId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_tarea_actividad")
   usuario         User              @relation(fields: [responsableId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_tarea_responsable")
-
+  ...auditFields
   @@schema("public")
 }
 
@@ -76,7 +76,7 @@ model TareaUsuario {
   usuarioId Int
   usuario   User  @relation(fields: [usuarioId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_tareausuario_usuario")
   grupo     grupo @relation(fields: [grupoId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_tareausuario_grupo")
-
+  ...auditFields
   @@schema("public")
 }
 
@@ -93,7 +93,7 @@ model grupo {
   Reuniones       Reuniones[]
   TareaUsuario    TareaUsuario[]
   documentosGrupo documentosGrupo[]
-
+  ...auditFields
   @@schema("public")
 }
 
@@ -105,7 +105,7 @@ model documentos {
   fecha_modifica    DateTime?
   fecha_elimina     DateTime?
   subdocumentos     Subdocumentos[]
-
+  ...auditFields
   @@schema("public")
 }
 
@@ -118,7 +118,7 @@ model Subdocumentos {
   fecha_modifica DateTime?
   fecha_elimina  DateTime?
   documentos     documentos @relation(fields: [documentosId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
+  ...auditFields
   @@schema("public")
 }
 
@@ -131,7 +131,7 @@ model documentosGrupo {
   fecha_crea     DateTime? @default(now())
   fecha_modifica DateTime?
   fecha_elimina  DateTime?
-
+  ...auditFields
   grupo grupo @relation(fields: [grupoId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@schema("public")
