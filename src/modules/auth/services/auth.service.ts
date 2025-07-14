@@ -84,7 +84,7 @@ export class AuthService {
 		});
 
 		// Basic Checks of user status
-		/* if (!user) throw new UnauthorizedException();
+		if (!user) throw new UnauthorizedException();
 
 		if (user.expirationAccount && user.expirationAccount < new Date()) throw new UnauthorizedException();
 
@@ -116,7 +116,7 @@ export class AuthService {
 			throw new UnauthorizedException();
 		}
 
-		await this.cacheManager.del(user.username); */
+		await this.cacheManager.del(user.username);
 
 		const tmpPermisos = user.role;
 		const accessTo = {};
