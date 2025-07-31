@@ -4,19 +4,19 @@ import { workingFilter } from '../dto/working.filter';
 
 @Injectable()
 export class WorkingService {
-	constructor(private db: SimplePrismaService) {}
+	constructor(private db: SimplePrismaService) { }
 
 	async create(createGroupDto: any) {
-		const { nombre, descripcion, nombreArchivo, grupoId } = createGroupDto;
+		const { nombre, descripcion, nombreArchivo, folderId } = createGroupDto;
 
 		const grupo = await this.db.documentosGrupo.create({
 			data: {
 				nombre,
 				descripcion,
 				nombreArchivo,
-				grupo: {
+				FolderByGrupo: {
 					connect: {
-						id: grupoId,
+						id: folderId,
 					},
 				},
 			},
@@ -40,10 +40,10 @@ export class WorkingService {
 		const { pagination } = filter;
 		const [items, total] = await this.db.$transaction([
 			this.db.documentosGrupo.findMany({
-				where: { grupoId: id },
+				where: { FolderbyGrupoId: id },
 				...pagination,
 			}),
-			this.db.documentosGrupo.count({ where: { grupoId: id } }),
+			this.db.documentosGrupo.count({ where: { FolderbyGrupoId: id } }),
 		]);
 		return {
 			items: items,
@@ -67,9 +67,5 @@ export class WorkingService {
 		return this.db.documentosGrupo.delete({
 			where: { id },
 		});
-	}
-
-	private formatDate(date: Date): string {
-		return new Intl.DateTimeFormat('es-BO').format(date);
 	}
 }
