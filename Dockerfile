@@ -16,5 +16,5 @@ RUN npm install --no-audit --progress=false; \
 	npm run prisma:generate; \
 	npm run build;
 
-CMD ["bash", "-c", "npx prisma migrate reset && npm run prisma:generate && npm run prisma:migrate:prod && npm run prisma:seed && npm run start:prod"]
+CMD ["bash", "-c", "npx prisma migrate reset --force && npm run prisma:generate && npm run prisma:migrate:prod && npm run prisma:seed && npm run start:prod"]
 
