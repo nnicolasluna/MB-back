@@ -25,14 +25,32 @@ export class EmailService {
 		meta: any = {},
 	) {
 		try {
-			this.logger.log(`Email sent to: ${to}`);
+			/* this.logger.log(`Email sent to: ${to}`);
 			return this.mailerService.sendMail({
 				to,
 				subject,
 				text,
 				template: `./${template}`,
 				context: meta,
-			});
+			}); */
+			// Construimos el objeto paso a paso
+			const mailOptions: any = { to, subject };
+
+			if (text) {
+				mailOptions.text = text;
+			}
+
+			// Solo agregamos template si es un string no vacío
+			if (typeof template === 'string' && template.trim() !== '') {
+				mailOptions.template = `./${template}`;
+				if (meta) {
+					mailOptions.context = meta;
+				}
+			}
+
+			await this.mailerService.sendMail(mailOptions);
+
+			this.logger.log(`Email sent to: ${to}`);
 		} catch (error) {
 			this.logger.error('mail error', error);
 			throw new HttpException({ message: 'Error sending the mail' }, 500);

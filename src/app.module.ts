@@ -19,6 +19,7 @@ import { MeetModule } from './modules/meet/meet.module';
 import { GroupModule } from './modules/group/group.module';
 import { ActivityModule } from './modules/activity/activity.module';
 import { DocsModule } from './modules/docs/docs.module';
+import { ReminderService } from '@modules/activity/services/ReminderService';
 
 @Module({
 	imports: [
@@ -74,6 +75,6 @@ import { DocsModule } from './modules/docs/docs.module';
 		DocsModule,
 	],
 	controllers: [],
-	providers: [],
+	providers: [ReminderService],
 })
 export class AppModule {}
